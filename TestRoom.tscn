@@ -1,8 +1,51 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=7 format=3 uid="uid://b0v3b4xa3blyl"]
 
+[ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="1_pn6sy"]
+[ext_resource type="Texture2D" uid="uid://cro21481xjvfd" path="res://bonesly-prototype-room.png" id="2_67kpo"]
+[ext_resource type="Texture2D" uid="uid://i2rdccate2e7" path="res://placeholder-bed.png" id="4_g6slu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
+size = Vector2(59, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kht6q"]
+size = Vector2(44, 39)
 
 [node name="TestRoom" type="Node2D"]
 
+[node name="Placeholder-house" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(285, 77)
+texture = ExtResource("1_2mm2m")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+position = Vector2(160, 90)
+
+[node name="Bonesly-prototype-room" type="Sprite2D" parent="Walls"]
+texture_filter = 1
+texture = ExtResource("2_67kpo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-45.5, -48)
+shape = SubResource("RectangleShape2D_jjusf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 102, 75, 102, -77, 55, -76, 50, -53, 75, -52, 76, 51, -79, 51)
+
 [node name="Bonesly" parent="." instance=ExtResource("1_pn6sy")]
-position = Vector2(103, 94)
+position = Vector2(116, 99)
+collision_layer = 2
+
+[node name="Bed" type="StaticBody2D" parent="."]
+position = Vector2(215, 120)
+collision_mask = 2
+
+[node name="Placeholder-bed" type="Sprite2D" parent="Bed"]
+texture_filter = 1
+texture_repeat = 1
+texture = ExtResource("4_g6slu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_kht6q")
