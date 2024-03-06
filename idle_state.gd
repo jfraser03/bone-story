@@ -5,7 +5,6 @@ var input = Vector2.ZERO
 
 func _enter_state():
 	play_animation.emit('idle')
-	print("Idle State entered")
 	
 func _physics_update(delta, Actor):
 	if Actor.input == Vector2.ZERO:

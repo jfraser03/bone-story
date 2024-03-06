@@ -32,7 +32,7 @@ func change_direction(Actor):
 		elif input.x < 0:
 			direction = "left"
 	
-	StateMachine.direction = direction
+	direction_change.emit(direction)
 	play_animation.emit('walk')
 	
 func check_x(x):

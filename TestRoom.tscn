@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://cro21481xjvfd" path="res://bonesly-prototype-room.png" id="2_67kpo"]
 [ext_resource type="Texture2D" uid="uid://i2rdccate2e7" path="res://placeholder-bed.png" id="4_g6slu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
-size = Vector2(59, 34)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kht6q"]
 size = Vector2(44, 39)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
+size = Vector2(59, 34)
 
 [node name="TestRoom" type="Node2D"]
 
@@ -25,10 +25,6 @@ position = Vector2(160, 90)
 [node name="Bonesly-prototype-room" type="Sprite2D" parent="Walls"]
 texture_filter = 1
 texture = ExtResource("2_67kpo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-position = Vector2(-45.5, -48)
-shape = SubResource("RectangleShape2D_jjusf")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 102, 75, 102, -77, 55, -76, 50, -53, 75, -52, 76, 51, -79, 51)
@@ -49,3 +45,9 @@ texture = ExtResource("4_g6slu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_kht6q")
+
+[node name="Hanger" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hanger"]
+position = Vector2(114.5, 42)
+shape = SubResource("RectangleShape2D_jjusf")

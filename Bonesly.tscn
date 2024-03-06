@@ -1,14 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://dycad4hhqtdi4"]
+[gd_scene load_steps=9 format=3 uid="uid://dycad4hhqtdi4"]
 
 [ext_resource type="Script" path="res://bonesly.gd" id="1_3ocrv"]
 [ext_resource type="SpriteFrames" uid="uid://dkqxhk3y8bxf2" path="res://bonesly_animation_sheet.tres" id="2_5d2um"]
 [ext_resource type="Script" path="res://state_machine.gd" id="3_g5f4i"]
 [ext_resource type="Script" path="res://idle_state.gd" id="4_jggm7"]
 [ext_resource type="Script" path="res://walk_state.gd" id="5_rn3g8"]
+[ext_resource type="Script" path="res://interact_area.gd" id="6_34ow5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_puhw6"]
 radius = 7.0
 height = 20.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ssfle"]
+radius = 6.0
+height = 14.0
 
 [node name="Bonesly" type="CharacterBody2D"]
 script = ExtResource("1_3ocrv")
@@ -17,22 +22,31 @@ script = ExtResource("1_3ocrv")
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = ExtResource("2_5d2um")
-animation = &"walk_down_left"
-frame = 2
-frame_progress = 0.529204
+animation = &"idle_down_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.54747e-13, 12)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_puhw6")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("Sprite", "Actor")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("Sprite", "Actor", "interactArea")]
 script = ExtResource("3_g5f4i")
 Sprite = NodePath("../AnimatedSprite2D")
 Actor = NodePath("..")
+interactArea = NodePath("../InteractArea")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("4_jggm7")
 
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("5_rn3g8")
+
+[node name="InteractArea" type="Area2D" parent="."]
+script = ExtResource("6_34ow5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CapsuleShape2D_ssfle")
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]

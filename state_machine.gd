@@ -3,6 +3,7 @@ class_name StateMachine
 
 @export var Sprite : AnimatedSprite2D
 @export var Actor : CharacterBody2D
+@export var interactArea : Area2D
 
 var prev_state : State
 var current_state : State
@@ -15,6 +16,7 @@ func _ready():
 		states[i.name.to_lower()] = i
 		i.play_animation.connect(_play_animation)
 		i.change_state.connect(_set_state)
+		i.direction_change.connect(_on_direction_update)
 
 	if states['idle']:
 		direction = "down"
@@ -38,6 +40,7 @@ func _physics_process(delta):
 	
 func _on_direction_update(new_direction):
 	direction = new_direction
+	interactArea.interact_position = direction
 
 func _play_animation(state):
 	var animation = state + "_" + direction
