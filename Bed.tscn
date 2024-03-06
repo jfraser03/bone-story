@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://nighydf74ymx"]
+
+[ext_resource type="PackedScene" uid="uid://co50kyyo4w533" path="res://Interactable.tscn" id="1_b5728"]
+[ext_resource type="Texture2D" uid="uid://i2rdccate2e7" path="res://placeholder-bed.png" id="2_casfn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dh052"]
+size = Vector2(44, 35)
+
+[node name="Bed" instance=ExtResource("1_b5728")]
+message = "Oh this sure looks comfy.. would have to have a little snooze."
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_casfn")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-1, 4.5)
+shape = SubResource("RectangleShape2D_dh052")

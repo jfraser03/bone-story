@@ -1,17 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=11 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
+[ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
 [ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="1_pn6sy"]
 [ext_resource type="Texture2D" uid="uid://cro21481xjvfd" path="res://bonesly-prototype-room.png" id="2_67kpo"]
-[ext_resource type="Texture2D" uid="uid://i2rdccate2e7" path="res://placeholder-bed.png" id="4_g6slu"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kht6q"]
-size = Vector2(44, 39)
+[ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://Bed.tscn" id="4_ud46p"]
+[ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
+[ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
+[ext_resource type="Script" path="res://ui.gd" id="7_issby"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
 
-[node name="TestRoom" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gryap"]
+size = Vector2(51.9135, 48.0254)
+
+[node name="TestRoom" type="Node2D" node_paths=PackedStringArray("Bonesly")]
+script = ExtResource("1_gpbl1")
+Bonesly = NodePath("Bonesly")
 
 [node name="Placeholder-house" type="Sprite2D" parent="."]
 visible = false
@@ -31,23 +37,65 @@ polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 10
 
 [node name="Bonesly" parent="." instance=ExtResource("1_pn6sy")]
 position = Vector2(116, 99)
-collision_layer = 2
-
-[node name="Bed" type="StaticBody2D" parent="."]
-position = Vector2(215, 120)
-collision_mask = 2
-
-[node name="Placeholder-bed" type="Sprite2D" parent="Bed"]
-texture_filter = 1
-texture_repeat = 1
-texture = ExtResource("4_g6slu")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
-position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_kht6q")
 
 [node name="Hanger" type="StaticBody2D" parent="."]
+collision_layer = 5
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hanger"]
 position = Vector2(114.5, 42)
 shape = SubResource("RectangleShape2D_jjusf")
+
+[node name="Bed" parent="." instance=ExtResource("4_ud46p")]
+position = Vector2(213, 118)
+collision_layer = 5
+message = "Oh this sure looks comfy.. would hate to have a little snooze."
+
+[node name="Window" type="StaticBody2D" parent="."]
+position = Vector2(138, 134)
+scale = Vector2(0.75125, 0.562203)
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Window"]
+texture_filter = 1
+position = Vector2(1.47669, 10.7213)
+scale = Vector2(1.37854, 1.21149)
+texture = ExtResource("5_kd6kq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Window"]
+position = Vector2(0.665543, 16.8978)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_gryap")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+theme = ExtResource("6_nq7dh")
+script = ExtResource("7_issby")
+
+[node name="Panel" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = 38.0
+offset_right = 77.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 152.0
+offset_bottom = 37.0
+text = "Hello world"

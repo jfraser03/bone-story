@@ -10,6 +10,8 @@ var input = Vector2.ZERO
 @onready var interactArea = $InteractArea
 var interactables = []
 
+signal interacted(object_message)
+
 
 func _physics_process(delta):
 	input.x = Input.get_axis('ui_left', 'ui_right')
@@ -23,7 +25,9 @@ func _physics_process(delta):
 # Code to be put into the StateMachine as an "interacting" state (where can't move until textbox is finished)
 func interact_test():
 	if interactables != []:
-		print("Bonesly really likes this ", interactables[0].name)
+		var object = interactables[0]
+		if object.has_method('get_message'):
+			interacted.emit(object.get_message())
 	
 
 func _on_interact_area_body_entered(body):

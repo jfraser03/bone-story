@@ -16,13 +16,14 @@ radius = 6.0
 height = 14.0
 
 [node name="Bonesly" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_3ocrv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = ExtResource("2_5d2um")
-animation = &"idle_down_left"
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.54747e-13, 12)
@@ -42,6 +43,8 @@ script = ExtResource("4_jggm7")
 script = ExtResource("5_rn3g8")
 
 [node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("6_34ow5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
