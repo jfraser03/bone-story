@@ -17,7 +17,9 @@ script = ExtResource("1_3ocrv")
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = ExtResource("2_5d2um")
-animation = &"idle_left"
+animation = &"walk_down_left"
+frame = 2
+frame_progress = 0.529204
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.54747e-13, 12)

@@ -41,5 +41,10 @@ func _on_direction_update(new_direction):
 
 func _play_animation(state):
 	var animation = state + "_" + direction
-	Sprite.play(animation)
 	
+	var current_frame = Sprite.get_frame()
+	var progress = Sprite.get_frame_progress()
+
+	Sprite.play(animation)
+	Sprite.set_frame_and_progress(current_frame, progress)
+
