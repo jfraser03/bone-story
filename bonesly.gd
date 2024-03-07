@@ -8,10 +8,16 @@ class_name Bonesly
 var input = Vector2.ZERO
 
 @onready var interactArea = $InteractArea
+@onready var StateMachine = $StateMachine
+@onready var Sprite = $AnimatedSprite2D
+
 var interactables = []
 
 signal interacted(object_message)
 
+func _ready():
+	StateMachine.animation_update.connect(_on_animation_update)
+	StateMachine._set_state("idle")
 
 func _physics_process(delta):
 	input.x = Input.get_axis('ui_left', 'ui_right')
@@ -20,6 +26,16 @@ func _physics_process(delta):
 	
 	var colliding = move_and_slide()
 	if Input.is_action_just_pressed("ui_select"): interact_test()
+	
+	
+func _on_animation_update(state, direction):
+	var animation = state + "_" + direction
+	
+	var current_frame = Sprite.get_frame()
+	var progress = Sprite.get_frame_progress()
+
+	Sprite.play(animation)
+	Sprite.set_frame_and_progress(current_frame, progress)
 
 
 # Code to be put into the StateMachine as an "interacting" state (where can't move until textbox is finished)
@@ -37,3 +53,5 @@ func _on_interact_area_body_entered(body):
 func _on_interact_area_body_exited(body):
 	if interactables.has(body):
 		interactables.erase(body)
+	
+

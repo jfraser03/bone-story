@@ -1,37 +1,43 @@
-[gd_scene load_steps=9 format=3 uid="uid://dycad4hhqtdi4"]
+[gd_scene load_steps=10 format=3 uid="uid://dycad4hhqtdi4"]
 
 [ext_resource type="Script" path="res://bonesly.gd" id="1_3ocrv"]
 [ext_resource type="SpriteFrames" uid="uid://dkqxhk3y8bxf2" path="res://bonesly_animation_sheet.tres" id="2_5d2um"]
-[ext_resource type="Script" path="res://state_machine.gd" id="3_g5f4i"]
+[ext_resource type="Texture2D" uid="uid://b8yxnvj10mjmx" path="res://skeleton-shadow.png" id="2_7yc1o"]
+[ext_resource type="PackedScene" uid="uid://cgxxvjv34rvbt" path="res://StateMachine.tscn" id="4_6n8al"]
 [ext_resource type="Script" path="res://idle_state.gd" id="4_jggm7"]
 [ext_resource type="Script" path="res://walk_state.gd" id="5_rn3g8"]
 [ext_resource type="Script" path="res://interact_area.gd" id="6_34ow5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_puhw6"]
-radius = 7.0
-height = 20.0
+radius = 4.0
+height = 18.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ssfle"]
-radius = 6.0
-height = 14.0
+radius = 11.0
+height = 34.0
 
 [node name="Bonesly" type="CharacterBody2D"]
+position = Vector2(2.08165e-12, 2.08165e-12)
 collision_layer = 2
 script = ExtResource("1_3ocrv")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+texture = ExtResource("2_7yc1o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
+position = Vector2(1, -20)
 sprite_frames = ExtResource("2_5d2um")
-animation = &"walk_down"
+animation = &"idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.54747e-13, 12)
+position = Vector2(-2.08165e-12, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_puhw6")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("Sprite", "Actor", "interactArea")]
-script = ExtResource("3_g5f4i")
+[node name="StateMachine" parent="." node_paths=PackedStringArray("Sprite", "Actor", "interactArea") instance=ExtResource("4_6n8al")]
 Sprite = NodePath("../AnimatedSprite2D")
 Actor = NodePath("..")
 interactArea = NodePath("../InteractArea")
@@ -48,8 +54,10 @@ collision_mask = 4
 script = ExtResource("6_34ow5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
-position = Vector2(2.08165e-12, 2.08165e-12)
+position = Vector2(-2.07607e-12, 16)
 shape = SubResource("CapsuleShape2D_ssfle")
 
 [connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
 [connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]
+
+[editable path="StateMachine"]

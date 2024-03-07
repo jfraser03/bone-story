@@ -1,6 +1,8 @@
 extends Node
 class_name StateMachine
 
+signal animation_update(current_state, current_direction)
+
 @export var Sprite : AnimatedSprite2D
 @export var Actor : CharacterBody2D
 @export var interactArea : Area2D
@@ -18,9 +20,7 @@ func _ready():
 		i.change_state.connect(_set_state)
 		i.direction_change.connect(_on_direction_update)
 
-	if states['idle']:
-		direction = "down"
-		_set_state('idle')
+	direction = "down"
 		
 
 func _set_state(new_state):
@@ -33,21 +33,17 @@ func _set_state(new_state):
 		prev_state._exit_state()
 	
 func _process(delta):
-	current_state._update(delta, Actor)
+	if current_state:
+		current_state._update(delta, Actor)
 
 func _physics_process(delta):
-	current_state._physics_update(delta, Actor)
+	if current_state:
+		current_state._physics_update(delta, Actor)
 	
 func _on_direction_update(new_direction):
 	direction = new_direction
-	interactArea.interact_position = direction
+	if interactArea != null:
+		interactArea.interact_position = direction
 
 func _play_animation(state):
-	var animation = state + "_" + direction
-	
-	var current_frame = Sprite.get_frame()
-	var progress = Sprite.get_frame_progress()
-
-	Sprite.play(animation)
-	Sprite.set_frame_and_progress(current_frame, progress)
-
+	animation_update.emit(state, direction)

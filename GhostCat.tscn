@@ -1,0 +1,289 @@
+[gd_scene load_steps=24 format=3 uid="uid://b2758kj1iumnj"]
+
+[ext_resource type="Script" path="res://ghost_cat.gd" id="1_u4cwx"]
+[ext_resource type="Texture2D" uid="uid://b8yxnvj10mjmx" path="res://skeleton-shadow.png" id="2_6dpsd"]
+[ext_resource type="Texture2D" uid="uid://c82d5hbfw0igm" path="res://ghostcat-Sheet.png" id="2_gppk1"]
+[ext_resource type="PackedScene" uid="uid://cgxxvjv34rvbt" path="res://StateMachine.tscn" id="4_1pp7d"]
+[ext_resource type="Script" path="res://follow_state.gd" id="5_l1eq7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cwn0"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dxnc"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(175, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oi1t"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vp4yh"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(150, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0na4"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(50, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm0bu"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kaxae"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ndq4"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(50, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mygij"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(75, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p37hd"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(100, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h12bd"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(125, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbext"]
+atlas = ExtResource("2_gppk1")
+region = Rect2(150, 0, 25, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hnya6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cwn0")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dxnc")
+}],
+"loop": true,
+"name": &"down_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8oi1t")
+}],
+"loop": true,
+"name": &"down_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vp4yh")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0na4")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm0bu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kaxae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ndq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mygij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p37hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h12bd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbext")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dxnc")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p37hd")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h12bd")
+}],
+"loop": true,
+"name": &"up_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mygij")
+}],
+"loop": true,
+"name": &"up_right",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_o3iex"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -14)]
+}
+
+[sub_resource type="Animation" id="Animation_62xe7"]
+resource_name = "float"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -14), Vector2(2.08165e-12, -10.41), Vector2(0, -14)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3qcqe"]
+_data = {
+"RESET": SubResource("Animation_o3iex"),
+"float": SubResource("Animation_62xe7")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_361mp"]
+radius = 2.0
+height = 12.0
+
+[sub_resource type="GDScript" id="GDScript_5psep"]
+resource_name = "float_state"
+script/source = "extends State
+
+@export var Actor : CharacterBody2D
+var StateMachine : StateMachine
+var Friend : CharacterBody2D
+
+func _enter_state():
+	Friend = Actor.Friend
+	StateMachine = get_parent()
+
+func _physics_update(delta, Actor):
+	if Actor.velocity != Vector2.ZERO:
+		apply_friction(delta)
+	point_to_friend()
+	var distance_to_friend = Actor.global_position.distance_to(Friend.global_position)
+	if distance_to_friend > Actor.FOLLOW_DISTANCE:
+		change_state.emit(\"follow\")
+		
+func point_to_friend():
+	if Friend != null:
+		var direction_vector = Friend.global_position - Actor.global_position
+		var radians = direction_vector.angle()
+		var angle = rad_to_deg(radians) 
+		
+		var direction = \"down\"
+		if angle < 30 && angle >= -30:
+			direction = \"right\"
+		elif angle < -30 && angle >= -60:
+			direction = \"up_right\"
+		elif angle < -60 && angle >= -120:
+			direction = \"up\"
+		elif angle < -120 && angle >= -150:
+			direction = \"up_left\"
+		elif angle < -150 || angle >= 160:
+			direction = \"left\"
+		elif angle < 160 && angle >= 130:
+			direction = \"down_left\"
+		elif angle < 130 && angle >= 60:
+			direction = \"down\"
+		elif angle < 60 && angle >= 30:
+			direction = \"down_right\"
+		
+		if StateMachine != null && direction != StateMachine.direction:
+			direction_change.emit(direction)
+			play_animation.emit(\"idle\")
+			
+func apply_friction(delta):
+	Actor.velocity.x = move_toward(Actor.velocity.x, 0, Actor.FRICTION * delta)
+	Actor.velocity.y = move_toward(Actor.velocity.y, 0, Actor.FRICTION * delta)
+"
+
+[node name="GhostCat" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_u4cwx")
+MAX_SPEED = 20.0
+ACCELERATION = 20.0
+FRICTION = 20.0
+FOLLOW_DISTANCE = 30.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0.304348, -3.6087)
+scale = Vector2(0.608696, 0.782609)
+texture = ExtResource("2_6dpsd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -14)
+sprite_frames = SubResource("SpriteFrames_hnya6")
+animation = &"left"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3qcqe")
+}
+autoplay = "float"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_361mp")
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("Sprite", "Actor") instance=ExtResource("4_1pp7d")]
+Sprite = NodePath("../AnimatedSprite2D")
+Actor = NodePath("..")
+
+[node name="Follow" type="Node" parent="StateMachine" node_paths=PackedStringArray("Actor")]
+script = ExtResource("5_l1eq7")
+Actor = NodePath("../..")
+
+[node name="Float" type="Node" parent="StateMachine"]
+script = SubResource("GDScript_5psep")

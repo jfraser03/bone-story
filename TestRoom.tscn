@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=12 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
 [ext_resource type="Script" path="res://ui.gd" id="7_issby"]
+[ext_resource type="PackedScene" uid="uid://b2758kj1iumnj" path="res://GhostCat.tscn" id="9_7gtnr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
@@ -17,7 +18,7 @@ size = Vector2(51.9135, 48.0254)
 
 [node name="TestRoom" type="Node2D" node_paths=PackedStringArray("Bonesly")]
 script = ExtResource("1_gpbl1")
-Bonesly = NodePath("Bonesly")
+Bonesly = NodePath("YSort/Bonesly")
 
 [node name="Placeholder-house" type="Sprite2D" parent="."]
 visible = false
@@ -35,8 +36,19 @@ texture = ExtResource("2_67kpo")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 102, 75, 102, -77, 55, -76, 50, -53, 75, -52, 76, 51, -79, 51)
 
-[node name="Bonesly" parent="." instance=ExtResource("1_pn6sy")]
-position = Vector2(116, 99)
+[node name="YSort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="GhostCat" parent="YSort" node_paths=PackedStringArray("Friend") instance=ExtResource("9_7gtnr")]
+position = Vector2(135, 111)
+Friend = NodePath("../Bonesly")
+ACCELERATION = 15.0
+
+[node name="Float" parent="YSort/GhostCat/StateMachine" index="1" node_paths=PackedStringArray("Actor")]
+Actor = NodePath("../..")
+
+[node name="Bonesly" parent="YSort" instance=ExtResource("1_pn6sy")]
+position = Vector2(161, 89)
 
 [node name="Hanger" type="StaticBody2D" parent="."]
 collision_layer = 5
@@ -98,3 +110,5 @@ offset_top = 9.0
 offset_right = 152.0
 offset_bottom = 37.0
 text = "Hello world"
+
+[editable path="YSort/GhostCat"]
