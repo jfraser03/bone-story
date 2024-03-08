@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=13 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
 [ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="1_pn6sy"]
 [ext_resource type="Texture2D" uid="uid://cro21481xjvfd" path="res://bonesly-prototype-room.png" id="2_67kpo"]
+[ext_resource type="PackedScene" uid="uid://7wmjnltwndld" path="res://Cockroach.tscn" id="4_5yeoa"]
 [ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://Bed.tscn" id="4_ud46p"]
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
@@ -38,6 +39,16 @@ polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 10
 
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="Cockroach" parent="YSort" node_paths=PackedStringArray("Friend") instance=ExtResource("4_5yeoa")]
+position = Vector2(98, 84)
+collision_layer = 0
+collision_mask = 0
+Friend = NodePath("../GhostCat")
+MAX_SPEED = 50.0
+ACCELERATION = 30.0
+FRICTION = 30.0
+FOLLOW_DISTANCE = 30.0
 
 [node name="GhostCat" parent="YSort" node_paths=PackedStringArray("Friend") instance=ExtResource("9_7gtnr")]
 position = Vector2(135, 111)
@@ -82,7 +93,8 @@ shape = SubResource("RectangleShape2D_gryap")
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 320.0
+offset_left = 31.0
+offset_right = 351.0
 offset_bottom = 180.0
 mouse_filter = 2
 theme = ExtResource("6_nq7dh")
