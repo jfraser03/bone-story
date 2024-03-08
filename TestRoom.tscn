@@ -9,13 +9,17 @@
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
 [ext_resource type="Script" path="res://ui.gd" id="7_issby"]
-[ext_resource type="PackedScene" uid="uid://b2758kj1iumnj" path="res://GhostCat.tscn" id="9_7gtnr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gryap"]
 size = Vector2(51.9135, 48.0254)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cckwm"]
+line_spacing = 8.0
+font_size = 8
+shadow_size = 0
 
 [node name="TestRoom" type="Node2D" node_paths=PackedStringArray("Bonesly")]
 script = ExtResource("1_gpbl1")
@@ -41,22 +45,14 @@ polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 10
 y_sort_enabled = true
 
 [node name="Cockroach" parent="YSort" node_paths=PackedStringArray("Friend") instance=ExtResource("4_5yeoa")]
-position = Vector2(98, 84)
+position = Vector2(161, 60)
 collision_layer = 0
 collision_mask = 0
-Friend = NodePath("../GhostCat")
-MAX_SPEED = 50.0
-ACCELERATION = 30.0
+Friend = NodePath("../Bonesly")
+MAX_SPEED = 75.0
+ACCELERATION = 50.0
 FRICTION = 30.0
 FOLLOW_DISTANCE = 30.0
-
-[node name="GhostCat" parent="YSort" node_paths=PackedStringArray("Friend") instance=ExtResource("9_7gtnr")]
-position = Vector2(135, 111)
-Friend = NodePath("../Bonesly")
-ACCELERATION = 15.0
-
-[node name="Float" parent="YSort/GhostCat/StateMachine" index="1" node_paths=PackedStringArray("Actor")]
-Actor = NodePath("../..")
 
 [node name="Bonesly" parent="YSort" instance=ExtResource("1_pn6sy")]
 position = Vector2(161, 89)
@@ -72,7 +68,7 @@ shape = SubResource("RectangleShape2D_jjusf")
 [node name="Bed" parent="." instance=ExtResource("4_ud46p")]
 position = Vector2(213, 118)
 collision_layer = 5
-message = "Oh this sure looks comfy.. I would hate to have a little snooze."
+message = "Your bed looks pretty comfy. And safe. This is some bonus text to test out the maximum character limit. Hopefully we'll be able to spread this message accross multiple pages."
 
 [node name="Window" type="StaticBody2D" parent="."]
 position = Vector2(138, 134)
@@ -93,15 +89,14 @@ shape = SubResource("RectangleShape2D_gryap")
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 31.0
-offset_right = 351.0
+offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
 theme = ExtResource("6_nq7dh")
 script = ExtResource("7_issby")
+metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -117,10 +112,22 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="UI/Panel"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 9.0
-offset_right = 152.0
-offset_bottom = 37.0
-text = "Hello world"
+offset_left = 13.0
+offset_top = 11.0
+offset_right = 140.0
+offset_bottom = 33.0
+text = "Textbox (50 characters)"
+label_settings = SubResource("LabelSettings_cckwm")
+autowrap_mode = 3
 
-[editable path="YSort/GhostCat"]
+[node name="Bookmark" type="Label" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 31.0
+offset_right = 147.0
+offset_bottom = 35.0
+text = "v"
+label_settings = SubResource("LabelSettings_cckwm")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
