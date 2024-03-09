@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=18 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://Bed.tscn" id="4_ud46p"]
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
-[ext_resource type="Script" path="res://ui.gd" id="7_issby"]
-[ext_resource type="Script" path="res://text_box.gd" id="9_wyrw8"]
+[ext_resource type="Script" path="res://dialogue_manager.gd" id="8_dhgy8"]
+[ext_resource type="Script" path="res://dialogue_sm.gd" id="9_50ky3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
@@ -17,10 +17,121 @@ size = Vector2(59, 34)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gryap"]
 size = Vector2(51.9135, 48.0254)
 
+[sub_resource type="GDScript" id="GDScript_hxsr3"]
+script/source = "extends State
+
+signal next_page
+
+@export var dialogueManager: DialogueManager
+
+func _enter_state():
+	var index = null
+
+func _physics_update(delta, Actor):
+	if Input.is_action_just_pressed(\"ui_select\"):
+		_next_page()
+		
+func _next_page():
+	var index = dialogueManager._get_index()
+	var dialogue = dialogueManager._get_dialogue()
+	if index >= dialogue.size() - 1:
+		change_state.emit('inactive')
+	else:
+		dialogueManager._set_index(index + 1)
+		change_state.emit('reading')
+"
+
+[sub_resource type="GDScript" id="GDScript_yjgeh"]
+script/source = "extends State
+
+@export var dialogueManager : DialogueManager
+@export var label : Label
+@export var textBox : Panel
+@export var CHAR_SPEED : float # Length of time each character takes
+
+var text_tween
+var finished : bool
+var total_chars : int
+
+signal page_finished
+
+func _physics_update(delta, Actor):
+	if Input.is_action_just_pressed(\"ui_select\"):
+		finish_text()
+
+func _enter_state():
+	var text = dialogueManager._get_dialogue()
+	var index = dialogueManager._get_index()
+	var speed = set_text_speed(text[index])
+	
+	total_chars = text[index].length()
+	
+	textBox.set_visible(true)
+	label.set_visible_characters(0)
+	label.set_text(text[index])
+	
+	tween_text(speed)
+
+func set_text_speed(page):
+	var length = page.length()
+	var text_speed = CHAR_SPEED * length
+	return text_speed
+	
+func finish_text():
+	finished = true
+	if text_tween:
+		text_tween.kill()
+	label.set_visible_ratio(1)
+	change_state.emit(\"read\")
+
+func tween_text(speed):
+	text_tween = get_tree().create_tween()
+	text_tween.tween_property(label, \"characters_shown\", total_chars, speed)
+	await text_tween.finished
+	if !finished:
+		finish_text()
+
+func _exit_state():
+	if text_tween:
+		text_tween.kill()
+"
+
+[sub_resource type="GDScript" id="GDScript_153ip"]
+script/source = "extends State
+
+@export var textBox : Panel
+@export var label : Label
+
+signal finished_reading
+
+func _enter_state():
+	textBox.set_visible(false)
+	label.set_text(\"\")
+
+"
+
 [sub_resource type="LabelSettings" id="LabelSettings_cckwm"]
 line_spacing = 8.0
 font_size = 8
 shadow_size = 0
+
+[sub_resource type="GDScript" id="GDScript_4d25u"]
+script/source = "extends Label
+
+var _characters_shown : int
+var characters_shown : int:
+	set(value):
+		if value != _characters_shown:
+			_characters_shown = value
+			_set_visible(value)
+
+func set_character_ratio(new_visible):
+	characters_shown = new_visible
+
+func _set_visible(value):
+	SoundManager.play_text_sound()
+	set_visible_characters(value)
+"
 
 [node name="TestRoom" type="Node2D" node_paths=PackedStringArray("Bonesly")]
 script = ExtResource("1_gpbl1")
@@ -88,6 +199,30 @@ texture = ExtResource("5_kd6kq")
 position = Vector2(0.665543, 16.8978)
 shape = SubResource("RectangleShape2D_gryap")
 
+[node name="DialogueManager" type="Node" parent="."]
+script = ExtResource("8_dhgy8")
+CHAR_LIMIT = 50
+
+[node name="StateMachine" type="Node" parent="DialogueManager" node_paths=PackedStringArray("textBox")]
+script = ExtResource("9_50ky3")
+textBox = NodePath("../../UI/TextBox")
+
+[node name="Read" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("dialogueManager")]
+script = SubResource("GDScript_hxsr3")
+dialogueManager = NodePath("../..")
+
+[node name="Reading" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("dialogueManager", "label", "textBox")]
+script = SubResource("GDScript_yjgeh")
+dialogueManager = NodePath("../..")
+label = NodePath("../../../UI/TextBox/Label")
+textBox = NodePath("../../../UI/TextBox")
+CHAR_SPEED = 0.025
+
+[node name="Inactive" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "label")]
+script = SubResource("GDScript_153ip")
+textBox = NodePath("../../../UI/TextBox")
+label = NodePath("../../../UI/TextBox/Label")
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -95,11 +230,9 @@ offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
 theme = ExtResource("6_nq7dh")
-script = ExtResource("7_issby")
 metadata/_edit_lock_ = true
 
 [node name="TextBox" type="Panel" parent="UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -112,16 +245,17 @@ offset_right = 77.0
 offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("9_wyrw8")
 
 [node name="Label" type="Label" parent="UI/TextBox"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 11.0
+offset_top = 16.0
 offset_right = 140.0
-offset_bottom = 33.0
+offset_bottom = 38.0
+text = "v"
 label_settings = SubResource("LabelSettings_cckwm")
 autowrap_mode = 3
+script = SubResource("GDScript_4d25u")
 
 [node name="Bookmark" type="Label" parent="UI/TextBox"]
 visible = false

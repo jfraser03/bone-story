@@ -16,6 +16,10 @@ run/main_scene="res://TestRoom.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://bonesly-promo.png"
 
+[autoload]
+
+SoundManager="*res://sound_manager.gd"
+
 [display]
 
 window/size/viewport_width=320

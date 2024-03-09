@@ -45,10 +45,12 @@ func _on_animation_update(state, direction):
 func interact_test():
 	if interactables != []:
 		var object = interactables[0]
-		if object.has_method('get_message'):
-			interacted.emit(object.get_message())
+		if object.has_method('interactable'): # if object Implements Interactable
+			interacted.emit(object)
 			StateMachine._set_state('interacting')
 
+func interaction_finished():
+	StateMachine._enter_state("idle")
 
 func _on_interact_area_body_entered(body):
 	if body != self:

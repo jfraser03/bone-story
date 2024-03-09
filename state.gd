@@ -15,5 +15,5 @@ func _exit_state():
 func _update(delta, Actor):
 	pass
 
-func _state_update(delta, Actor):
+func _physics_update(delta, Actor):
 	pass

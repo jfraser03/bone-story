@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0xsqde6h7yum"]
+
+[ext_resource type="Script" path="res://sound_console.gd" id="1_wgkxe"]
+
+[node name="SoundConsole" type="Node"]
+script = ExtResource("1_wgkxe")
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Channel1" type="AudioStreamPlayer" parent="SFX"]
+
+[node name="Channel2" type="AudioStreamPlayer" parent="SFX"]
+
+[node name="Channel3" type="AudioStreamPlayer" parent="SFX"]
+
+[node name="Channel4" type="AudioStreamPlayer" parent="SFX"]
+
+[node name="Music" type="Node" parent="."]
+
+[node name="Channel1" type="AudioStreamPlayer" parent="Music"]
+
+[node name="Channel2" type="AudioStreamPlayer" parent="Music"]
+
+[node name="TextAudio" type="AudioStreamPlayer" parent="."]
