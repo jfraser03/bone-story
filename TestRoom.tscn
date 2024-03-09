@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=14 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
 [ext_resource type="Script" path="res://ui.gd" id="7_issby"]
+[ext_resource type="Script" path="res://text_box.gd" id="9_wyrw8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
@@ -54,8 +55,9 @@ ACCELERATION = 50.0
 FRICTION = 30.0
 FOLLOW_DISTANCE = 30.0
 
-[node name="Bonesly" parent="YSort" instance=ExtResource("1_pn6sy")]
+[node name="Bonesly" parent="YSort" node_paths=PackedStringArray("UI") instance=ExtResource("1_pn6sy")]
 position = Vector2(161, 89)
+UI = NodePath("../../UI")
 
 [node name="Hanger" type="StaticBody2D" parent="."]
 collision_layer = 5
@@ -68,7 +70,7 @@ shape = SubResource("RectangleShape2D_jjusf")
 [node name="Bed" parent="." instance=ExtResource("4_ud46p")]
 position = Vector2(213, 118)
 collision_layer = 5
-message = "Your bed looks pretty comfy. And safe. This is some bonus text to test out the maximum character limit. Hopefully we'll be able to spread this message accross multiple pages."
+message = "Your bed looks pretty comfy. And safe. I sure would hate to crawl in and have a little tiny teensy weensy itty bitty snooze."
 
 [node name="Window" type="StaticBody2D" parent="."]
 position = Vector2(138, 134)
@@ -96,7 +98,8 @@ theme = ExtResource("6_nq7dh")
 script = ExtResource("7_issby")
 metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="UI"]
+[node name="TextBox" type="Panel" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -109,18 +112,19 @@ offset_right = 77.0
 offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("9_wyrw8")
 
-[node name="Label" type="Label" parent="UI/Panel"]
+[node name="Label" type="Label" parent="UI/TextBox"]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 11.0
 offset_right = 140.0
 offset_bottom = 33.0
-text = "Textbox (50 characters)"
 label_settings = SubResource("LabelSettings_cckwm")
 autowrap_mode = 3
 
-[node name="Bookmark" type="Label" parent="UI/Panel"]
+[node name="Bookmark" type="Label" parent="UI/TextBox"]
+visible = false
 layout_mode = 0
 offset_left = 143.0
 offset_top = 31.0

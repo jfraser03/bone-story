@@ -12,3 +12,5 @@ func _physics_update(delta, Actor):
 		Actor.velocity.y = move_toward(Actor.velocity.y, 0, Actor.FRICTION * delta)
 	else:
 		change_state.emit('walk')
+	if Input.is_action_just_pressed("ui_select"):
+		interacting.emit()

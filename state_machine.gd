@@ -2,6 +2,7 @@ extends Node
 class_name StateMachine
 
 signal animation_update(current_state, current_direction)
+signal interacting
 
 @export var Sprite : AnimatedSprite2D
 @export var Actor : CharacterBody2D
@@ -19,6 +20,7 @@ func _ready():
 		i.play_animation.connect(_play_animation)
 		i.change_state.connect(_set_state)
 		i.direction_change.connect(_on_direction_update)
+		i.interacting.connect(_on_interacting)
 
 	direction = "down"
 		
@@ -47,3 +49,6 @@ func _on_direction_update(new_direction):
 
 func _play_animation(state):
 	animation_update.emit(state, direction)
+
+func _on_interacting():
+	interacting.emit()

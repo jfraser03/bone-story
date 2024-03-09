@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dycad4hhqtdi4"]
+[gd_scene load_steps=11 format=3 uid="uid://dycad4hhqtdi4"]
 
 [ext_resource type="Script" path="res://bonesly.gd" id="1_3ocrv"]
 [ext_resource type="SpriteFrames" uid="uid://dkqxhk3y8bxf2" path="res://bonesly_animation_sheet.tres" id="2_5d2um"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://idle_state.gd" id="4_jggm7"]
 [ext_resource type="Script" path="res://walk_state.gd" id="5_rn3g8"]
 [ext_resource type="Script" path="res://interact_area.gd" id="6_34ow5"]
+[ext_resource type="Script" path="res://interacting_state.gd" id="7_82j62"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_puhw6"]
 radius = 4.0
@@ -47,6 +48,9 @@ script = ExtResource("4_jggm7")
 
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("5_rn3g8")
+
+[node name="Interacting" type="Node" parent="StateMachine"]
+script = ExtResource("7_82j62")
 
 [node name="InteractArea" type="Area2D" parent="."]
 collision_layer = 0

@@ -7,16 +7,20 @@ class_name Bonesly
 @export var FRICTION = 2000
 var input = Vector2.ZERO
 
+@export var UI : Control
+
 @onready var interactArea = $InteractArea
 @onready var StateMachine = $StateMachine
+@onready var interactingState = $StateMachine/Interacting
 @onready var Sprite = $AnimatedSprite2D
 
 var interactables = []
 
-signal interacted(object_message)
+signal interacted(message)
 
 func _ready():
 	StateMachine.animation_update.connect(_on_animation_update)
+	StateMachine.interacting.connect(interact_test)
 	StateMachine._set_state("idle")
 
 func _physics_process(delta):
@@ -25,7 +29,6 @@ func _physics_process(delta):
 	input = input.normalized()
 	
 	var colliding = move_and_slide()
-	if Input.is_action_just_pressed("ui_select"): interact_test()
 	
 	
 func _on_animation_update(state, direction):
@@ -44,7 +47,8 @@ func interact_test():
 		var object = interactables[0]
 		if object.has_method('get_message'):
 			interacted.emit(object.get_message())
-	
+			StateMachine._set_state('interacting')
+
 
 func _on_interact_area_body_entered(body):
 	if body != self:

@@ -17,6 +17,8 @@ func _physics_update(delta, Actor):
 	else:
 		StateMachine.direction = direction
 		change_state.emit('idle')
+	if Input.is_action_just_pressed("ui_select"):
+		interacting.emit()
 
 func change_direction(Actor):
 	var input = Actor.input

@@ -1,15 +1,16 @@
 extends Node2D
 
-@onready var UI = $UI
+@onready var UI = $UI/TextBox
 @export var Bonesly : CharacterBody2D
 
 func _ready():
 	Bonesly.interacted.connect(text_box_message)
+	UI.textbox_finished.connect(set_idle_state)
 
 func text_box_message(message):
 	var pages = create_pages(message)
 	print(pages)
-	#UI.set_message(pages)
+	UI.set_message(pages)
 	
 func create_pages(message):
 	var pages = []
@@ -33,3 +34,6 @@ func create_pages(message):
 		pages.append(current_page.strip_edges(true))
 	
 	return pages
+
+func set_idle_state():
+	$YSort/Bonesly/StateMachine._set_state("idle")
