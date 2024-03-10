@@ -1,22 +1,24 @@
 extends Node
 class_name DialogueManager
 
-### Callable object that breaks script into pages and starts the StateMachine
+### Callable object that breaks script into pages, starts the StateMachine, and
+### signals up when complete
+
 
 @export var CHAR_LIMIT : int
 
 @onready var StateMachine = $StateMachine
+@onready var inactiveState = $StateMachine/Inactive
 
 var dialogue = []
 var index = 0
 
+signal dialogue_over
+
 func _ready():
-	# TEST CODE
-	var test_message = "Amidst the stars, Captain Boens discovered a hidden planet, thriving with unknown life. A new chapter in exploration began."
-	_begin_dialogue(test_message)
+	inactiveState.finished_reading.connect(_on_finished_reading)
 	
-	
-	
+
 func _begin_dialogue(script):
 	index = 0
 	dialogue = create_pages(script)
@@ -52,3 +54,6 @@ func _get_index():
 
 func _set_index(value):
 	index = value
+
+func _on_finished_reading():
+	dialogue_over.emit()

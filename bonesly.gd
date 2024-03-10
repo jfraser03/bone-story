@@ -11,16 +11,16 @@ var input = Vector2.ZERO
 
 @onready var interactArea = $InteractArea
 @onready var StateMachine = $StateMachine
-@onready var interactingState = $StateMachine/Interacting
+@onready var interact = $StateMachine/Interact
 @onready var Sprite = $AnimatedSprite2D
-
-var interactables = []
 
 signal interacted(message)
 
+var interactables : Array = []
+
 func _ready():
 	StateMachine.animation_update.connect(_on_animation_update)
-	StateMachine.interacting.connect(interact_test)
+	StateMachine.interacting.connect(_interact)
 	StateMachine._set_state("idle")
 
 func _physics_process(delta):
@@ -29,7 +29,6 @@ func _physics_process(delta):
 	input = input.normalized()
 	
 	var colliding = move_and_slide()
-	
 	
 func _on_animation_update(state, direction):
 	var animation = state + "_" + direction
@@ -40,17 +39,15 @@ func _on_animation_update(state, direction):
 	Sprite.play(animation)
 	Sprite.set_frame_and_progress(current_frame, progress)
 
-
-# Code to be put into the StateMachine as an "interacting" state (where can't move until textbox is finished)
-func interact_test():
+func _interact():
 	if interactables != []:
-		var object = interactables[0]
-		if object.has_method('interactable'): # if object Implements Interactable
-			interacted.emit(object)
-			StateMachine._set_state('interacting')
+		var node = interactables[0]
+		if Interface.node_implements_interface(node, Interface.InteractableInterface):
+			node.interact(self)
+			StateMachine._set_state('interact')
 
 func interaction_finished():
-	StateMachine._enter_state("idle")
+	StateMachine._set_state("idle")
 
 func _on_interact_area_body_entered(body):
 	if body != self:
@@ -59,5 +56,3 @@ func _on_interact_area_body_entered(body):
 func _on_interact_area_body_exited(body):
 	if interactables.has(body):
 		interactables.erase(body)
-	
-

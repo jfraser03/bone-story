@@ -23,28 +23,42 @@ script/source = "extends State
 signal next_page
 
 @export var dialogueManager: DialogueManager
+@export var bookmark : Label
+
+var index
+var dialogue
 
 func _enter_state():
-	var index = null
-
+	print(\"read state\")
+	index = dialogueManager._get_index()
+	dialogue = dialogueManager._get_dialogue()
+	_set_bookmark()
+	
 func _physics_update(delta, Actor):
 	if Input.is_action_just_pressed(\"ui_select\"):
 		_next_page()
 		
 func _next_page():
-	var index = dialogueManager._get_index()
-	var dialogue = dialogueManager._get_dialogue()
 	if index >= dialogue.size() - 1:
 		change_state.emit('inactive')
 	else:
 		dialogueManager._set_index(index + 1)
 		change_state.emit('reading')
+
+func _set_bookmark():
+	if index >= dialogue.size() - 1:
+		bookmark.set_text(\"o\")
+	else:
+		bookmark.set_text(\"v\")
+	bookmark.set_visible(true)
+	
 "
 
 [sub_resource type="GDScript" id="GDScript_yjgeh"]
 script/source = "extends State
 
 @export var dialogueManager : DialogueManager
+@export var bookmark : Label
 @export var label : Label
 @export var textBox : Panel
 @export var CHAR_SPEED : float # Length of time each character takes
@@ -52,25 +66,34 @@ script/source = "extends State
 var text_tween
 var finished : bool
 var total_chars : int
+var can_finish: bool # To avoid the 'finishing' of text from initial select press
 
 signal page_finished
 
 func _physics_update(delta, Actor):
 	if Input.is_action_just_pressed(\"ui_select\"):
-		finish_text()
+		if can_finish:
+			finish_text()
 
 func _enter_state():
+	can_finish = false
 	var text = dialogueManager._get_dialogue()
 	var index = dialogueManager._get_index()
 	var speed = set_text_speed(text[index])
 	
+	
 	total_chars = text[index].length()
 	
+	finished = false
 	textBox.set_visible(true)
+	bookmark.set_visible(false)
 	label.set_visible_characters(0)
 	label.set_text(text[index])
 	
 	tween_text(speed)
+	await get_tree().create_timer(0.01).timeout
+	can_finish = true
+	
 
 func set_text_speed(page):
 	var length = page.length()
@@ -92,6 +115,7 @@ func tween_text(speed):
 		finish_text()
 
 func _exit_state():
+	can_finish = false
 	if text_tween:
 		text_tween.kill()
 "
@@ -105,6 +129,8 @@ script/source = "extends State
 signal finished_reading
 
 func _enter_state():
+	print(\"inactive state\")
+	finished_reading.emit()
 	textBox.set_visible(false)
 	label.set_text(\"\")
 
@@ -181,7 +207,6 @@ shape = SubResource("RectangleShape2D_jjusf")
 [node name="Bed" parent="." instance=ExtResource("4_ud46p")]
 position = Vector2(213, 118)
 collision_layer = 5
-message = "Your bed looks pretty comfy. And safe. I sure would hate to crawl in and have a little tiny teensy weensy itty bitty snooze."
 
 [node name="Window" type="StaticBody2D" parent="."]
 position = Vector2(138, 134)
@@ -207,16 +232,18 @@ CHAR_LIMIT = 50
 script = ExtResource("9_50ky3")
 textBox = NodePath("../../UI/TextBox")
 
-[node name="Read" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("dialogueManager")]
+[node name="Read" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("dialogueManager", "bookmark")]
 script = SubResource("GDScript_hxsr3")
 dialogueManager = NodePath("../..")
+bookmark = NodePath("../../../UI/TextBox/Bookmark")
 
-[node name="Reading" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("dialogueManager", "label", "textBox")]
+[node name="Reading" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("dialogueManager", "bookmark", "label", "textBox")]
 script = SubResource("GDScript_yjgeh")
 dialogueManager = NodePath("../..")
+bookmark = NodePath("../../../UI/TextBox/Bookmark")
 label = NodePath("../../../UI/TextBox/Label")
 textBox = NodePath("../../../UI/TextBox")
-CHAR_SPEED = 0.025
+CHAR_SPEED = 0.035
 
 [node name="Inactive" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "label")]
 script = SubResource("GDScript_153ip")
@@ -233,6 +260,7 @@ theme = ExtResource("6_nq7dh")
 metadata/_edit_lock_ = true
 
 [node name="TextBox" type="Panel" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

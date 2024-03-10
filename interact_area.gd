@@ -1,10 +1,5 @@
 extends Area2D
 
-var sprite_y = 20
-
-func _ready():
-	interact_position = "down"
-
 var rotations = {
 	"down": 0,
 	"down_right": -45,
@@ -19,6 +14,9 @@ var rotations = {
 var interact_position:
 	set(value):
 		set_interact_position(value)
+		
+func _ready():
+	interact_position = "down"
 
 func set_interact_position(value: String):
 	if rotations.has(value):

@@ -49,7 +49,7 @@ script = ExtResource("4_jggm7")
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("5_rn3g8")
 
-[node name="Interacting" type="Node" parent="StateMachine"]
+[node name="Interact" type="Node" parent="StateMachine"]
 script = ExtResource("7_82j62")
 
 [node name="InteractArea" type="Area2D" parent="."]

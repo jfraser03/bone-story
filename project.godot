@@ -19,6 +19,7 @@ config/icon="res://bonesly-promo.png"
 [autoload]
 
 SoundManager="*res://sound_manager.gd"
+Interface="*res://interface.gd"
 
 [display]
 

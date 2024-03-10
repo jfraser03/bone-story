@@ -1,6 +1,17 @@
 extends Node
+var implements = Interface.InteractableInterface
 
-@export var message : String
+var interactor : Node
 
-func get_message():
-	return message
+
+@export_multiline var message : String
+
+signal interacted(node, message)
+
+func interact(interact_requester: Node):
+	interactor = interact_requester
+	interacted.emit(self, message)
+	
+	
+func interaction_complete():
+	interactor.interaction_finished()

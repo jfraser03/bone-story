@@ -7,7 +7,7 @@
 size = Vector2(44, 35)
 
 [node name="Bed" instance=ExtResource("1_b5728")]
-message = "Oh this sure looks comfy.. would have to have a little snooze."
+message = "Your bed looks pretty comfy. And safe."
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_casfn")
