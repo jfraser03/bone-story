@@ -3,6 +3,7 @@ extends Node
 
 class InteractableInterface:
 	signal interacted
+	signal submit_dialogue
 	func interact():
 		pass
 

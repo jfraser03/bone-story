@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=20 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://7wmjnltwndld" path="res://Cockroach.tscn" id="4_5yeoa"]
 [ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://Bed.tscn" id="4_ud46p"]
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
+[ext_resource type="PackedScene" uid="uid://b2758kj1iumnj" path="res://GhostCat.tscn" id="6_3yytq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
 [ext_resource type="Script" path="res://dialogue_manager.gd" id="8_dhgy8"]
 [ext_resource type="Script" path="res://dialogue_sm.gd" id="9_50ky3"]
+[ext_resource type="Script" path="res://interaction_manager.gd" id="9_xtkuu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
@@ -29,7 +31,6 @@ var index
 var dialogue
 
 func _enter_state():
-	print(\"read state\")
 	index = dialogueManager._get_index()
 	dialogue = dialogueManager._get_dialogue()
 	_set_bookmark()
@@ -129,7 +130,6 @@ script/source = "extends State
 signal finished_reading
 
 func _enter_state():
-	print(\"inactive state\")
 	finished_reading.emit()
 	textBox.set_visible(false)
 	label.set_text(\"\")
@@ -196,6 +196,11 @@ FOLLOW_DISTANCE = 30.0
 position = Vector2(161, 89)
 UI = NodePath("../../UI")
 
+[node name="GhostCat" parent="YSort" node_paths=PackedStringArray("Friend") groups=["Interactable"] instance=ExtResource("6_3yytq")]
+position = Vector2(96, 89)
+collision_layer = 4
+Friend = NodePath("../Bonesly")
+
 [node name="Hanger" type="StaticBody2D" parent="."]
 collision_layer = 5
 collision_mask = 2
@@ -204,7 +209,7 @@ collision_mask = 2
 position = Vector2(114.5, 42)
 shape = SubResource("RectangleShape2D_jjusf")
 
-[node name="Bed" parent="." instance=ExtResource("4_ud46p")]
+[node name="Bed" parent="." groups=["Interactable"] instance=ExtResource("4_ud46p")]
 position = Vector2(213, 118)
 collision_layer = 5
 
@@ -223,6 +228,10 @@ texture = ExtResource("5_kd6kq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Window"]
 position = Vector2(0.665543, 16.8978)
 shape = SubResource("RectangleShape2D_gryap")
+
+[node name="InteractionManager" type="Node" parent="." node_paths=PackedStringArray("dialogueManager")]
+script = ExtResource("9_xtkuu")
+dialogueManager = NodePath("../DialogueManager")
 
 [node name="DialogueManager" type="Node" parent="."]
 script = ExtResource("8_dhgy8")

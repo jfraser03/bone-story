@@ -44,7 +44,9 @@ func _interact():
 		var node = interactables[0]
 		if Interface.node_implements_interface(node, Interface.InteractableInterface):
 			node.interact(self)
-			StateMachine._set_state('interact')
+			
+func set_interacting():
+	StateMachine._set_state('interact')
 
 func interaction_finished():
 	StateMachine._set_state("idle")
