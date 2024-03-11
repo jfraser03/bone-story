@@ -13,12 +13,12 @@ class_name DialogueManager
 var dialogue = []
 var index = 0
 
-signal dialogue_over()
+signal dialogue_over
 
 func _ready():
 	inactiveState.finished_reading.connect(_on_finished_reading)
 
-func _begin_dialogue(script):
+func read_script(script):
 	index = 0
 	dialogue = create_pages(script)
 	StateMachine._set_state('reading')

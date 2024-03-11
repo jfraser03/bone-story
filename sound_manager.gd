@@ -21,3 +21,6 @@ func play_music(sound):
 func play_text_sound():
 	if speaker == "":
 		soundConsole.play_textAudio(TEXT_BLOOP)
+
+func set_speaker(new_speaker):
+	speaker = new_speaker

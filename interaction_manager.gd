@@ -18,8 +18,9 @@ func _on_interacted(interactor: Node, interactee: Node):
 	interact_player = interactor
 	interactor.set_interacting()
 
-func _on_dialogue_request(message : String):
-	dialogueManager._begin_dialogue(message)
+func _on_dialogue_request(dialogue : String): #make dialogue : DialogueResource
+	dialogueManager.read_script(dialogue)
+	# dalogueSystem.set_dialogue_resource(dialogueResource)
 	
 func _on_dialogue_over():
 	interact_player.interaction_finished()

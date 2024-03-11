@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=22 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://dialogue_manager.gd" id="8_dhgy8"]
 [ext_resource type="Script" path="res://dialogue_sm.gd" id="9_50ky3"]
 [ext_resource type="Script" path="res://interaction_manager.gd" id="9_xtkuu"]
+[ext_resource type="Script" path="res://dialogue_system.gd" id="10_100is"]
+[ext_resource type="Texture2D" uid="uid://mbovxeqntdmg" path="res://czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGQyMzUtcGRzdHViYnMwMDAwNWEtaW1hZ2UucG5n.png.webp" id="13_ekiy0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
@@ -233,6 +235,9 @@ shape = SubResource("RectangleShape2D_gryap")
 script = ExtResource("9_xtkuu")
 dialogueManager = NodePath("../DialogueManager")
 
+[node name="DialogueSystem" type="Node" parent="."]
+script = ExtResource("10_100is")
+
 [node name="DialogueManager" type="Node" parent="."]
 script = ExtResource("8_dhgy8")
 CHAR_LIMIT = 50
@@ -267,6 +272,37 @@ offset_bottom = 180.0
 mouse_filter = 2
 theme = ExtResource("6_nq7dh")
 metadata/_edit_lock_ = true
+
+[node name="Nametag" type="Control" parent="UI"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="UI/Nametag"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 117.0
+offset_right = 163.0
+offset_bottom = 130.0
+
+[node name="Label" type="Label" parent="UI/Nametag/Panel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 8.0
+offset_right = 47.0
+offset_bottom = 48.0
+text = "Bo Bones"
+
+[node name="TextureRect" type="TextureRect" parent="UI/Nametag"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 76.0
+offset_right = 238.0
+offset_bottom = 205.0
+texture = ExtResource("13_ekiy0")
+expand_mode = 1
+flip_h = true
 
 [node name="TextBox" type="Panel" parent="UI"]
 visible = false
