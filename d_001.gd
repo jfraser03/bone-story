@@ -7,6 +7,7 @@ func _init():
 			"text": "I like bones. And the dark"
 		},
 		{
-			"signal": ["set_quest_status", ["Q_001", "active"]]
+			"quest_update": ["Q_001", "active"]
 		}
 	]
+

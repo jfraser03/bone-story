@@ -58,3 +58,7 @@ func _on_interact_area_body_entered(body):
 func _on_interact_area_body_exited(body):
 	if interactables.has(body):
 		interactables.erase(body)
+		
+func play_footstep():
+	var step = randi() % 3
+	SoundManager.play_sfx(SoundManager.FOOTSTEPS[step])

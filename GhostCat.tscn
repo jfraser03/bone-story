@@ -290,7 +290,7 @@ func point_to_friend():
 			
 "
 
-[node name="GhostCat" type="CharacterBody2D"]
+[node name="GhostCat" type="CharacterBody2D" groups=["Interactables"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_u4cwx")
@@ -298,7 +298,6 @@ MAX_SPEED = 20.0
 ACCELERATION = 20.0
 FRICTION = 20.0
 FOLLOW_DISTANCE = 30.0
-message = "Hello there. I like the dark."
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

@@ -1,9 +1,7 @@
+### Fragments script into pages, starts the StateMachine, and
+### signals back up when complete
 extends Node
 class_name DialogueManager
-
-### Callable object that breaks script into pages, starts the StateMachine, and
-### signals up when complete
-
 
 @export var CHAR_LIMIT : int
 

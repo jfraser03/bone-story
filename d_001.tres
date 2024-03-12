@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_enmyl")
-dialogues = []
+dialogues = Array[Dictionary]([{}])

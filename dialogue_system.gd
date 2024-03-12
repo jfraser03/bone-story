@@ -1,4 +1,8 @@
+### Parses DialogueResource files for data and actions, and sets them in motion
 extends Node
+class_name InteractionSystem
+
+@export var dialogueManager : DialogueManager
 
 var dialogue_resource: DialogueResource
 var current_dialogue_index: int = 0
@@ -24,14 +28,14 @@ func show_current_dialogue():
 		# Set name tag
 		pass
 	if "text" in current_entry:
-		#dialogueManager.read_script(current_entry["text"])
-		pass
+		dialogueManager.read_script(current_entry["text"])
 	if "quest_update" in current_entry:
 		# quest_update.emit(current_entry["quest_update"])
 		## This is where we talk to the QuestSystem
 		pass
 	if "cutscene" in current_entry:
 		# cutscene_start.emit(current_entry["cutscene"])
+		pass
 	# await script_finished
 	
 func reset():

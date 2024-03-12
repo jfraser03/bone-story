@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://2umb8lodqfbj"]
+
+[ext_resource type="Script" path="res://ghostcat_dialogue.gd" id="1_168lo"]
+
+[resource]
+script = ExtResource("1_168lo")
+dialogues = Array[Dictionary]([])

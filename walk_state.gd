@@ -3,6 +3,7 @@ extends State
 @onready var StateMachine = get_parent()
 var prev_direction = Vector2.ZERO # Used to tell idle state direction to point && to check if walking a new direction 
 var direction : String
+@export var Sprite : AnimatedSprite2D
 
 func _enter_state():
 	play_animation.emit('walk')

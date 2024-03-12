@@ -31,7 +31,7 @@ texture_filter = 1
 texture_repeat = 1
 position = Vector2(1, -20)
 sprite_frames = ExtResource("2_5d2um")
-animation = &"idle_down"
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.08165e-12, -2)
@@ -46,8 +46,9 @@ interactArea = NodePath("../InteractArea")
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("4_jggm7")
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("Sprite")]
 script = ExtResource("5_rn3g8")
+Sprite = NodePath("../../AnimatedSprite2D")
 
 [node name="Interact" type="Node" parent="StateMachine"]
 script = ExtResource("7_82j62")
