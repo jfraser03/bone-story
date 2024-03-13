@@ -4,17 +4,25 @@ extends Node
 class_name DialogueManager
 
 @export var CHAR_LIMIT : int
+@export var UI : Control
 
 @onready var StateMachine = $StateMachine
-@onready var inactiveState = $StateMachine/Inactive
+@onready var finishedState = $StateMachine/Finished
+@onready var readingState = $StateMachine/Reading
+@onready var readState = $StateMachine/Read
 
 var dialogue = []
 var index = 0
+var char_portrait : Node
 
-signal dialogue_over
+signal script_finished
 
 func _ready():
-	inactiveState.finished_reading.connect(_on_finished_reading)
+	finishedState.finished_reading.connect(_on_finished_reading)
+	readState.finished_page.connect(_on_page_finish)
+	readingState.page_reading.connect(_on_reading)
+	UI.portrait_created.connect(_on_portrait_set)
+	
 
 func read_script(script):
 	index = 0
@@ -53,4 +61,22 @@ func _set_index(value):
 	index = value
 
 func _on_finished_reading():
-	dialogue_over.emit()
+	print("Done")
+	script_finished.emit()
+
+func _on_page_finish():
+	if char_portrait != null:
+		char_portrait.set_animation("idle")
+
+func _on_reading():
+	print("reading")
+	if char_portrait != null:
+		char_portrait.set_animation("talking")
+
+func interaction_finished():
+	## The high-level, multi-step interaction has been finished. Clear UI
+	StateMachine._set_state("inactive")
+	
+func _on_portrait_set(new_portrait):
+	char_portrait = new_portrait
+	

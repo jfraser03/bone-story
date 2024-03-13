@@ -14,7 +14,7 @@ func _ready():
 			interactables.append(node)
 			node.interacted.connect(_on_interacted)
 			node.submit_dialogue.connect(_on_dialogue_request)
-	dialogueManager.dialogue_over.connect(_on_dialogue_over)
+	interactionSystem.interaction_complete.connect(_on_interaction_over)
 
 func _on_interacted(interactor: Node, interactee: Node):
 	interact_player = interactor
@@ -23,6 +23,7 @@ func _on_interacted(interactor: Node, interactee: Node):
 func _on_dialogue_request(dialogueResource : DialogueResource):
 	interactionSystem.set_dialogue_resource(dialogueResource)
 	
-func _on_dialogue_over():
+func _on_interaction_over():
 	interact_player.interaction_finished()
+	dialogueManager.interaction_finished()
 	

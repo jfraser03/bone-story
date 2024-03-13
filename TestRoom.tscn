@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=25 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://dialogue_sm.gd" id="9_50ky3"]
 [ext_resource type="Script" path="res://interaction_manager.gd" id="9_xtkuu"]
 [ext_resource type="Script" path="res://dialogue_system.gd" id="10_100is"]
-[ext_resource type="Texture2D" uid="uid://mbovxeqntdmg" path="res://czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGQyMzUtcGRzdHViYnMwMDAwNWEtaW1hZ2UucG5n.png.webp" id="13_ekiy0"]
+[ext_resource type="Resource" uid="uid://dfrs6h44iw5iw" path="res://portraits.tres" id="16_c3sxo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
 size = Vector2(59, 34)
@@ -32,11 +32,13 @@ signal next_page
 
 var index
 var dialogue
+signal finished_page
 
 func _enter_state():
 	index = dialogueManager._get_index()
 	dialogue = dialogueManager._get_dialogue()
 	_set_bookmark()
+	finished_page.emit()
 	
 func _physics_update(delta, Actor):
 	if Input.is_action_just_pressed(\"ui_select\"):
@@ -44,7 +46,7 @@ func _physics_update(delta, Actor):
 		
 func _next_page():
 	if index >= dialogue.size() - 1:
-		change_state.emit('inactive')
+		change_state.emit('finished')
 	else:
 		dialogueManager._set_index(index + 1)
 		change_state.emit('reading')
@@ -72,6 +74,7 @@ var finished : bool
 var total_chars : int
 var can_finish: bool # To avoid the 'finishing' of text from initial select press
 
+signal page_reading
 signal page_finished
 
 func _physics_update(delta, Actor):
@@ -94,6 +97,7 @@ func _enter_state():
 	label.set_visible_characters(0)
 	label.set_text(text[index])
 	
+	page_reading.emit()
 	tween_text(speed)
 	await get_tree().create_timer(0.01).timeout
 	can_finish = true
@@ -134,9 +138,54 @@ signal finished_reading
 
 func _enter_state():
 	finished_reading.emit()
-	textBox.set_visible(false)
-	label.set_text(\"\")
+"
 
+[sub_resource type="GDScript" id="GDScript_w44p4"]
+script/source = "extends State
+
+@export var textBox: Control
+@export var nameTag: Control
+
+func _enter_state():
+	textBox.set_visible(false)
+	nameTag.set_visible(false)
+"
+
+[sub_resource type="GDScript" id="GDScript_xgpgw"]
+script/source = "extends Control
+
+@export var portraits : Resource
+const PORTRAIT_POSITION = Vector2(110, -5)
+var portrait : Node
+@onready var nameTagPanel = $Nametag/Panel
+@onready var nameTag = $Nametag
+@onready var nameTagLabel = $Nametag/Panel/Label
+
+signal portrait_created(portrait)
+
+func set_nametag(name):
+	nameTag.set_visible(true)
+	nameTagLabel.set_text(name)
+
+func check_portrait():
+	if portrait == null:
+		return false
+	else:
+		return true
+	
+func add_portrait(name):
+	var new_portrait = portraits.fetch(name)
+	portrait = new_portrait.instantiate()
+	portrait.set_position(PORTRAIT_POSITION)
+	nameTagPanel.add_child(portrait)
+	portrait_created.emit(portrait)
+	
+func update_portrait(state):
+	print(\"UPDATING\")
+	portrait.set_animation(state)
+
+func delete_portrait():
+	portrait.queue_free()
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_cckwm"]
@@ -238,13 +287,15 @@ script = ExtResource("9_xtkuu")
 dialogueManager = NodePath("../DialogueManager")
 interactionSystem = NodePath("../InteractionSystem")
 
-[node name="InteractionSystem" type="Node" parent="." node_paths=PackedStringArray("dialogueManager")]
+[node name="InteractionSystem" type="Node" parent="." node_paths=PackedStringArray("dialogueManager", "UI")]
 script = ExtResource("10_100is")
 dialogueManager = NodePath("../DialogueManager")
+UI = NodePath("../UI")
 
-[node name="DialogueManager" type="Node" parent="."]
+[node name="DialogueManager" type="Node" parent="." node_paths=PackedStringArray("UI")]
 script = ExtResource("8_dhgy8")
 CHAR_LIMIT = 50
+UI = NodePath("../UI")
 
 [node name="StateMachine" type="Node" parent="DialogueManager" node_paths=PackedStringArray("textBox")]
 script = ExtResource("9_50ky3")
@@ -263,10 +314,15 @@ label = NodePath("../../../UI/TextBox/Label")
 textBox = NodePath("../../../UI/TextBox")
 CHAR_SPEED = 0.035
 
-[node name="Inactive" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "label")]
+[node name="Finished" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "label")]
 script = SubResource("GDScript_153ip")
 textBox = NodePath("../../../UI/TextBox")
 label = NodePath("../../../UI/TextBox/Label")
+
+[node name="Inactive" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "nameTag")]
+script = SubResource("GDScript_w44p4")
+textBox = NodePath("../../../UI/TextBox")
+nameTag = NodePath("../../../UI/Nametag")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -275,7 +331,8 @@ offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
 theme = ExtResource("6_nq7dh")
-metadata/_edit_lock_ = true
+script = SubResource("GDScript_xgpgw")
+portraits = ExtResource("16_c3sxo")
 
 [node name="Nametag" type="Control" parent="UI"]
 visible = false
@@ -296,17 +353,7 @@ offset_left = 6.0
 offset_top = 8.0
 offset_right = 47.0
 offset_bottom = 48.0
-text = "Bo Bones"
-
-[node name="TextureRect" type="TextureRect" parent="UI/Nametag"]
-layout_mode = 0
-offset_left = 169.0
-offset_top = 76.0
-offset_right = 238.0
-offset_bottom = 205.0
-texture = ExtResource("13_ekiy0")
-expand_mode = 1
-flip_h = true
+text = "GhostCat"
 
 [node name="TextBox" type="Panel" parent="UI"]
 visible = false

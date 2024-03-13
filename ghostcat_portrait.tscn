@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://4pj88wto55t8"]
+
+[ext_resource type="SpriteFrames" uid="uid://dmp7b51cksehh" path="res://ghostcat_portrait.tres" id="1_340fo"]
+
+[sub_resource type="GDScript" id="GDScript_wynt5"]
+script/source = "extends Node2D
+
+@onready var animationPlayer = $AnimationPlayer
+@onready var animatedSprite = $AnimatedSprite2D
+
+func _ready():
+	animationPlayer.play(\"float\")
+	animatedSprite.play()
+
+func set_animation(state):
+	animatedSprite.set_animation(state)
+"
+
+[sub_resource type="Animation" id="Animation_ci4l4"]
+resource_name = "float"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2.2, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2.08165e-12, 2.08165e-12), Vector2(2.08165e-12, 4), Vector2(2.08165e-12, 4), Vector2(2.08165e-12, 2.08165e-12)]
+}
+
+[sub_resource type="Animation" id="Animation_sy8l4"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_urdre"]
+_data = {
+"RESET": SubResource("Animation_sy8l4"),
+"float": SubResource("Animation_ci4l4")
+}
+
+[node name="GhostcatPortrait" type="Node2D"]
+script = SubResource("GDScript_wynt5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_urdre")
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2.08165e-12, 3)
+sprite_frames = ExtResource("1_340fo")
+animation = &"talking"
+frame_progress = 0.974984
