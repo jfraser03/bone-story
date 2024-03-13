@@ -1,14 +1,15 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cydoi65sq6v4"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cydoi65sq6v4"]
 
 [ext_resource type="FontFile" uid="uid://vf1xeumknx21" path="res://Earth_Momma.ttf" id="1_m1eta"]
 [ext_resource type="StyleBox" uid="uid://dcor6gw33fh0d" path="res://button9patch-hover.tres" id="2_rhqnq"]
 [ext_resource type="StyleBox" uid="uid://c6bilq53yquei" path="res://button9patch.tres" id="3_y3yoi"]
 [ext_resource type="StyleBox" uid="uid://covmmyrywb2o7" path="res://button9patch-pressed.tres" id="4_ayc35"]
 [ext_resource type="StyleBox" uid="uid://dpusultsbxjud" path="res://panel9patch.tres" id="5_geo06"]
+[ext_resource type="FontFile" uid="uid://bh7rswhhgw2tk" path="res://PixelRPG.ttf" id="6_1w6sq"]
 
 [resource]
-default_font = ExtResource("1_m1eta")
-default_font_size = 8
+default_font = ExtResource("6_1w6sq")
+default_font_size = 6
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_disabled_color = Color(0, 0, 0, 1)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)

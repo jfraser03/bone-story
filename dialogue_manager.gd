@@ -14,6 +14,14 @@ class_name DialogueManager
 var dialogue = []
 var index = 0
 var char_portrait : Node
+var script_effects = []
+
+var text_effects = {
+	"shake" : {
+		"intro" : "[shake rate=15.0 level=1connected=1]",
+		"outro" : "[/shake]"
+	}
+}
 
 signal script_finished
 
@@ -24,12 +32,12 @@ func _ready():
 	UI.portrait_created.connect(_on_portrait_set)
 	
 
-func read_script(script):
+func read_script(script : String):
 	index = 0
 	dialogue = create_pages(script)
 	StateMachine._set_state('reading')
 	
-func create_pages(script):
+func create_pages(script : String):
 	var pages = []
 	var words = script.split(" ")
 	
@@ -50,17 +58,38 @@ func create_pages(script):
 		pages.append(current_page.strip_edges(true))
 	
 	return pages
+	
+func set_script_effects(new_effects: Array):
+	# Create dict called text_effects which contains a script with all custom effect resources {"shake": shake_text.tres}
+	# Use the effects parameter to search the resource, and apply it to the RichTextLabel
+	script_effects = new_effects
 
-func set_script_speed(speed):
+func set_script_speed(speed : float):
 	readingState.set_speed(speed)
 	
-func _get_dialogue():
-	return dialogue
+func _get_dialogue() -> Array:
+	if script_effects == []: return dialogue
+	var new_dialogue = []
+	var bbc_intro = ""
+	var bbc_outro = ""
+	for effect in script_effects:
+		if effect in text_effects:
+			bbc_intro = text_effects[effect]["intro"]
+			bbc_outro = text_effects[effect]["outro"]
+	# Currently not supporting multiple effects. Need to stack BBC intros and outros programatically
+	for page in dialogue:
+		var formatted_script = bbc_intro + page + bbc_outro
+		new_dialogue.append(formatted_script)
+	print(new_dialogue)
+	return new_dialogue	
+
+func get_script_length():
+	return dialogue[index].length()
 
 func _get_index():
 	return index
 
-func _set_index(value):
+func _set_index(value : int):
 	index = value
 
 func _on_finished_reading():

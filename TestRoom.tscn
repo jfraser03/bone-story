@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=26 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -65,7 +65,7 @@ script/source = "extends State
 
 @export var dialogueManager : DialogueManager
 @export var bookmark : Label
-@export var label : Label
+@export var label : RichTextLabel
 @export var textBox : Panel
 @export var char_speed: float # Length of time each character takes
 
@@ -84,12 +84,12 @@ func _physics_update(delta, Actor):
 
 func _enter_state():
 	can_finish = false
-	var text = dialogueManager._get_dialogue()
+	var text = dialogueManager._get_dialogue() ## Retrieves formatted dialogue
 	var index = dialogueManager._get_index()
 	var speed = set_text_speed(text[index])
 	
 	
-	total_chars = text[index].length()
+	total_chars = dialogueManager.get_script_length() ## Retrieves size of script without formatting
 	
 	finished = false
 	textBox.set_visible(true)
@@ -158,7 +158,7 @@ func _enter_state():
 script/source = "extends Control
 
 @export var portraits : Resource
-const PORTRAIT_POSITION = Vector2(110, -5)
+const PORTRAIT_POSITION = Vector2(110, 0)
 var portrait : Node
 @onready var nameTagPanel = $Nametag/Panel
 @onready var nameTag = $Nametag
@@ -184,20 +184,17 @@ func add_portrait(name):
 	portrait_created.emit(portrait)
 	
 func update_portrait(state):
-	print(\"UPDATING\")
 	portrait.set_animation(state)
 
 func delete_portrait():
 	portrait.queue_free()
 "
 
-[sub_resource type="LabelSettings" id="LabelSettings_cckwm"]
-line_spacing = 8.0
-font_size = 8
-shadow_size = 0
+[sub_resource type="RichTextEffect" id="RichTextEffect_npnlr"]
 
-[sub_resource type="GDScript" id="GDScript_4d25u"]
-script/source = "extends Label
+[sub_resource type="GDScript" id="GDScript_pejdc"]
+script/source = "extends RichTextLabel
+
 var non_chars = [\" \", \".\", \"'\", \"!\", \"?\", \",\", \"-\"]
 var current_char : int
 var _characters_shown : int
@@ -212,11 +209,16 @@ func set_character_ratio(new_visible):
 	characters_shown = new_visible
 
 func _set_visible(value):
-	
 	if not text[current_char] in non_chars:
 		SoundManager.play_text_sound()
 	set_visible_characters(value)
+
 "
+
+[sub_resource type="LabelSettings" id="LabelSettings_cckwm"]
+line_spacing = 8.0
+font_size = 8
+shadow_size = 0
 
 [node name="TestRoom" type="Node2D" node_paths=PackedStringArray("Bonesly")]
 script = ExtResource("1_gpbl1")
@@ -317,14 +319,13 @@ bookmark = NodePath("../../../UI/TextBox/Bookmark")
 script = SubResource("GDScript_yjgeh")
 dialogueManager = NodePath("../..")
 bookmark = NodePath("../../../UI/TextBox/Bookmark")
-label = NodePath("../../../UI/TextBox/Label")
+label = NodePath("../../../UI/TextBox/RichTextLabel")
 textBox = NodePath("../../../UI/TextBox")
-CHAR_SPEED = 0.03
 
 [node name="Finished" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "label")]
 script = SubResource("GDScript_153ip")
 textBox = NodePath("../../../UI/TextBox")
-label = NodePath("../../../UI/TextBox/Label")
+label = NodePath("")
 
 [node name="Inactive" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "nameTag")]
 script = SubResource("GDScript_w44p4")
@@ -350,17 +351,17 @@ offset_bottom = 40.0
 [node name="Panel" type="Panel" parent="UI/Nametag"]
 layout_mode = 0
 offset_left = 94.0
-offset_top = 117.0
-offset_right = 163.0
+offset_top = 112.0
+offset_right = 172.0
 offset_bottom = 130.0
 
 [node name="Label" type="Label" parent="UI/Nametag/Panel"]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 8.0
-offset_right = 47.0
-offset_bottom = 48.0
-text = "GhostCat"
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 74.0
+offset_bottom = 18.0
+text = "Ghost Cat"
 
 [node name="TextBox" type="Panel" parent="UI"]
 visible = false
@@ -377,16 +378,18 @@ offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="UI/TextBox"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/TextBox"]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 16.0
-offset_right = 140.0
-offset_bottom = 38.0
-text = "v"
-label_settings = SubResource("LabelSettings_cckwm")
-autowrap_mode = 3
-script = SubResource("GDScript_4d25u")
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 150.0
+offset_bottom = 36.0
+bbcode_enabled = true
+text = "[shake rate=1.0 level=1 connected=1] I'm afraid of the dark. [/shake]"
+fit_content = true
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_npnlr")]
+script = SubResource("GDScript_pejdc")
 
 [node name="Bookmark" type="Label" parent="UI/TextBox"]
 visible = false

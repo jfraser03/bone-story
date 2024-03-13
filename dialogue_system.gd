@@ -8,6 +8,7 @@ class_name InteractionSystem
 var dialogue_resource: DialogueResource
 var interaction_index: int = 0
 
+
 signal quest_update(quest_id, status)
 signal cutscene_start(cutscene_id)
 signal interaction_complete
@@ -39,8 +40,15 @@ func play_interaction(index):
 	else:
 		SoundManager.set_speaker("")
 	if "text" in current_entry:
+		var script = current_entry["text"]["script"]
+		var effects = []
+		# Tell DialogueManager# of chars to show without BBCode formatting
+		if "effects" in current_entry["text"]:
+			effects = current_entry["text"]["effects"]
+		dialogueManager.set_script_effects(effects)
 		dialogueManager.set_script_speed(current_entry["text"]["speed"])
-		dialogueManager.read_script(current_entry["text"]["script"])
+		dialogueManager.read_script(script)
+		
 	if "quest_update" in current_entry:
 		# quest_update.emit(current_entry["quest_update"])
 		## This is where we talk to the QuestSystem
