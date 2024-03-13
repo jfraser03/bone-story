@@ -22,3 +22,8 @@ script = ExtResource("1_wgkxe")
 [node name="Channel2" type="AudioStreamPlayer" parent="Music"]
 
 [node name="TextAudio" type="AudioStreamPlayer" parent="."]
+
+[node name="Timer" type="Timer" parent="TextAudio"]
+one_shot = true
+
+[connection signal="timeout" from="TextAudio/Timer" to="." method="_on_timer_timeout"]

@@ -61,7 +61,6 @@ func _set_index(value):
 	index = value
 
 func _on_finished_reading():
-	print("Done")
 	script_finished.emit()
 
 func _on_page_finish():
@@ -69,7 +68,6 @@ func _on_page_finish():
 		char_portrait.set_animation("idle")
 
 func _on_reading():
-	print("reading")
 	if char_portrait != null:
 		char_portrait.set_animation("talking")
 
