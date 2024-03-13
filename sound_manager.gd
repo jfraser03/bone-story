@@ -22,7 +22,8 @@ func play_music(sound):
 
 func play_text_sound():
 	if speaker == "":
-		soundConsole.play_textAudio(GHOSTCAT_VOICE)
+		soundConsole.play_textAudio(TEXT_BLOOP)
+	else:
 		random_voice_sound(GHOSTCAT_VOICE)
 
 func set_speaker(new_speaker):

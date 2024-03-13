@@ -51,6 +51,9 @@ func create_pages(script):
 	
 	return pages
 
+func set_script_speed(speed):
+	readingState.set_speed(speed)
+	
 func _get_dialogue():
 	return dialogue
 

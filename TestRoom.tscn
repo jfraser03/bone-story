@@ -67,7 +67,7 @@ script/source = "extends State
 @export var bookmark : Label
 @export var label : Label
 @export var textBox : Panel
-@export var CHAR_SPEED : float # Length of time each character takes
+@export var char_speed: float # Length of time each character takes
 
 var text_tween
 var finished : bool
@@ -105,7 +105,7 @@ func _enter_state():
 
 func set_text_speed(page):
 	var length = page.length()
-	var text_speed = CHAR_SPEED * length
+	var text_speed = char_speed * length
 	return text_speed
 	
 func finish_text():
@@ -126,6 +126,9 @@ func _exit_state():
 	can_finish = false
 	if text_tween:
 		text_tween.kill()
+
+func set_speed(new_speed : float):
+	char_speed = new_speed
 "
 
 [sub_resource type="GDScript" id="GDScript_153ip"]

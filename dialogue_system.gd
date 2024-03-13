@@ -32,16 +32,15 @@ func advance_dialogue():
 func play_interaction(index):
 	var current_entry = dialogue_resource.dialogues[index]
 	if "character" in current_entry:
-		# Set character voice in sound manager
-		#SoundManager.set_speaker(current_entry["character"][0])
+		SoundManager.set_speaker(current_entry["character"]["name"])
 		if UI.check_portrait() == false:
-			UI.add_portrait(current_entry["character"][0])
-		UI.set_nametag(current_entry["character"][0])
-		# Set character portrait
-		# Set name tag
-		pass
+			UI.add_portrait(current_entry["character"]["name"])
+		UI.set_nametag(current_entry["character"]["display_name"])
+	else:
+		SoundManager.set_speaker("")
 	if "text" in current_entry:
-		dialogueManager.read_script(current_entry["text"])
+		dialogueManager.set_script_speed(current_entry["text"]["speed"])
+		dialogueManager.read_script(current_entry["text"]["script"])
 	if "quest_update" in current_entry:
 		# quest_update.emit(current_entry["quest_update"])
 		## This is where we talk to the QuestSystem
