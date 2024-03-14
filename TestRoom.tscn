@@ -176,15 +176,16 @@ func check_portrait():
 	else:
 		return true
 	
-func add_portrait(name):
+func add_portrait(name, mood):
 	var new_portrait = portraits.fetch(name)
 	portrait = new_portrait.instantiate()
 	portrait.set_position(PORTRAIT_POSITION)
+	portrait.set_mood(mood)
 	nameTagPanel.add_child(portrait)
 	portrait_created.emit(portrait)
 	
-func update_portrait(state):
-	portrait.set_animation(state)
+func update_portrait_mood(mood):
+	portrait.set_mood(mood)
 
 func delete_portrait():
 	portrait.queue_free()
@@ -322,10 +323,9 @@ bookmark = NodePath("../../../UI/TextBox/Bookmark")
 label = NodePath("../../../UI/TextBox/RichTextLabel")
 textBox = NodePath("../../../UI/TextBox")
 
-[node name="Finished" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "label")]
+[node name="Finished" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox")]
 script = SubResource("GDScript_153ip")
 textBox = NodePath("../../../UI/TextBox")
-label = NodePath("")
 
 [node name="Inactive" type="Node" parent="DialogueManager/StateMachine" node_paths=PackedStringArray("textBox", "nameTag")]
 script = SubResource("GDScript_w44p4")

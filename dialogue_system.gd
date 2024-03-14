@@ -35,7 +35,8 @@ func play_interaction(index):
 	if "character" in current_entry:
 		SoundManager.set_speaker(current_entry["character"]["name"])
 		if UI.check_portrait() == false:
-			UI.add_portrait(current_entry["character"]["name"])
+			UI.add_portrait(current_entry["character"]["name"], current_entry["character"]["mood"])
+		else: UI.update_portrait_mood(current_entry["character"]["mood"])
 		UI.set_nametag(current_entry["character"]["display_name"])
 	else:
 		SoundManager.set_speaker("")

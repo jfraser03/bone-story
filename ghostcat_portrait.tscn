@@ -8,12 +8,22 @@ script/source = "extends Node2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var animatedSprite = $AnimatedSprite2D
 
+var mood : String
+var state : String
+
 func _ready():
 	animationPlayer.play(\"float\")
 	animatedSprite.play()
 
-func set_animation(state):
-	animatedSprite.set_animation(state)
+func set_state(new_state):
+	state = new_state
+	
+func set_mood(new_mood):
+	mood = new_mood
+	
+func play_animation():
+	var animation = mood + \"_\" + state
+	animatedSprite.set_animation(animation)
 "
 
 [sub_resource type="Animation" id="Animation_sy8l4"]
@@ -53,5 +63,4 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(2.08165e-12, 3)
 sprite_frames = ExtResource("1_340fo")
-animation = &"talking"
-frame_progress = 0.340682
+animation = &"neutral_talking"

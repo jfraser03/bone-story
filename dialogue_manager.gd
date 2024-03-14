@@ -80,7 +80,6 @@ func _get_dialogue() -> Array:
 	for page in dialogue:
 		var formatted_script = bbc_intro + page + bbc_outro
 		new_dialogue.append(formatted_script)
-	print(new_dialogue)
 	return new_dialogue	
 
 func get_script_length():
@@ -97,11 +96,13 @@ func _on_finished_reading():
 
 func _on_page_finish():
 	if char_portrait != null:
-		char_portrait.set_animation("idle")
+		char_portrait.set_state("idle")
+		char_portrait.play_animation()
 
 func _on_reading():
 	if char_portrait != null:
-		char_portrait.set_animation("talking")
+		char_portrait.set_state("talking")
+		char_portrait.play_animation()
 
 func interaction_finished():
 	## The high-level, multi-step interaction has been finished. Clear UI
