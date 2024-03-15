@@ -1,6 +1,6 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dfrs6h44iw5iw"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cbnhvyae6im0d"]
 
-[ext_resource type="PackedScene" uid="uid://4pj88wto55t8" path="res://ghostcat_portrait.tscn" id="1_s5ml8"]
+[ext_resource type="PackedScene" path="res://ghostcat_portrait.tscn" id="1_s5ml8"]
 
 [sub_resource type="GDScript" id="GDScript_i42jm"]
 script/source = "extends Resource

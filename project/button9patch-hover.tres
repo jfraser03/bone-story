@@ -1,6 +1,6 @@
-[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dcor6gw33fh0d"]
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dbh1mx1u3xl2u"]
 
-[ext_resource type="Texture2D" uid="uid://dj63nv7kfgovd" path="res://Button9Slice.png" id="1_sa7lr"]
+[ext_resource type="Texture2D" path="res://Button9Slice.png" id="1_sa7lr"]
 
 [resource]
 content_margin_left = 1.0
