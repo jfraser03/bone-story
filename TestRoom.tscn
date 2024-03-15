@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=27 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cro21481xjvfd" path="res://bonesly-prototype-room.png" id="2_67kpo"]
 [ext_resource type="PackedScene" uid="uid://7wmjnltwndld" path="res://Cockroach.tscn" id="4_5yeoa"]
 [ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://Bed.tscn" id="4_ud46p"]
+[ext_resource type="PackedScene" uid="uid://5mqc1nho2n1j" path="res://BadDog.tscn" id="5_aj7sn"]
 [ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="PackedScene" uid="uid://b2758kj1iumnj" path="res://GhostCat.tscn" id="6_3yytq"]
 [ext_resource type="Theme" uid="uid://cydoi65sq6v4" path="res://default_theme.tres" id="6_nq7dh"]
@@ -241,6 +242,14 @@ texture = ExtResource("2_67kpo")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 102, 75, 102, -77, 55, -76, 50, -53, 75, -52, 76, 51, -79, 51)
 
+[node name="DogBoundaries" type="Node2D" parent="."]
+
+[node name="Left" type="Marker2D" parent="DogBoundaries"]
+position = Vector2(175, 38)
+
+[node name="Right" type="Marker2D" parent="DogBoundaries"]
+position = Vector2(210, 38)
+
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -253,6 +262,20 @@ MAX_SPEED = 75.0
 ACCELERATION = 50.0
 FRICTION = 30.0
 FOLLOW_DISTANCE = 30.0
+
+[node name="BadDog" parent="YSort" instance=ExtResource("5_aj7sn")]
+position = Vector2(194, 51)
+
+[node name="Block" parent="YSort/BadDog/StateMachine" index="0" node_paths=PackedStringArray("Player", "leftBoundary", "rightBoundary")]
+DOG_SPEED = 750
+Player = NodePath("../../../Bonesly")
+leftBoundary = NodePath("../../../../DogBoundaries/Left")
+rightBoundary = NodePath("../../../../DogBoundaries/Right")
+
+[node name="Idle" parent="YSort/BadDog/StateMachine" index="1" node_paths=PackedStringArray("Player", "leftBoundary", "rightBoundary")]
+Player = NodePath("../../../Bonesly")
+leftBoundary = NodePath("../../../../DogBoundaries/Left")
+rightBoundary = NodePath("../../../../DogBoundaries/Right")
 
 [node name="Bonesly" parent="YSort" node_paths=PackedStringArray("UI") instance=ExtResource("1_pn6sy")]
 position = Vector2(161, 89)
@@ -403,3 +426,5 @@ label_settings = SubResource("LabelSettings_cckwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[editable path="YSort/BadDog"]

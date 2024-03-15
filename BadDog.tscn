@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=3 uid="uid://5mqc1nho2n1j"]
+
+[ext_resource type="Texture2D" uid="uid://b1riuefickgvr" path="res://dog-test.png" id="1_0s1yu"]
+[ext_resource type="Script" path="res://state_machine.gd" id="2_btne5"]
+
+[sub_resource type="GDScript" id="GDScript_i85d0"]
+script/source = "extends CharacterBody2D
+
+@onready var stateMachine = $StateMachine
+
+func _ready():
+	stateMachine._set_state(\"block\")
+
+func _physics_process(delta):
+	move_and_slide()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpoc5"]
+atlas = ExtResource("1_0s1yu")
+region = Rect2(0, 0, 35, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4oywn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpoc5")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6bw45"]
+radius = 12.0
+height = 36.0
+
+[sub_resource type="GDScript" id="GDScript_xcetq"]
+script/source = "extends State
+
+@export var DOG_SPEED : int
+
+@export var Player : CharacterBody2D
+@export var leftBoundary : Marker2D
+@export var rightBoundary : Marker2D
+
+func _enter_state():
+	print(\"Block state entered\")
+
+func _physics_update(delta, Actor):
+	if Player:
+		follow_player(delta, Actor, Player)
+		
+func follow_player(delta, Actor, Player):
+	var direction = (Player.position - Actor.position).normalized()
+	Actor.velocity.x = direction.x * DOG_SPEED
+
+"
+
+[sub_resource type="GDScript" id="GDScript_nw4kg"]
+script/source = "extends State
+
+@export var Player : CharacterBody2D
+@export var leftBoundary : Marker2D
+@export var rightBoundary : Marker2D
+
+func _enter_state():
+	print(\"idle state entered\")
+
+func _physics_update(delta, Actor):
+	if Player:
+		if player_seen():
+			change_state.emit(\"block\")
+		
+func player_seen() -> bool:
+	if Player.global_position.x >= leftBoundary.global_position.x && Player.global_position.x <= rightBoundary.global_position.x:
+		return true
+	return false
+"
+
+[node name="BadDog" type="CharacterBody2D"]
+script = SubResource("GDScript_i85d0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -19)
+sprite_frames = SubResource("SpriteFrames_4oywn")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.42109e-14, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6bw45")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("Sprite", "Actor")]
+script = ExtResource("2_btne5")
+Sprite = NodePath("../AnimatedSprite2D")
+Actor = NodePath("..")
+
+[node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("leftBoundary", "rightBoundary")]
+script = SubResource("GDScript_xcetq")
+leftBoundary = NodePath("")
+rightBoundary = NodePath("")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = SubResource("GDScript_nw4kg")
