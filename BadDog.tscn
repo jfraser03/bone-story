@@ -95,10 +95,8 @@ script = ExtResource("2_btne5")
 Sprite = NodePath("../AnimatedSprite2D")
 Actor = NodePath("..")
 
-[node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("leftBoundary", "rightBoundary")]
+[node name="Block" type="Node" parent="StateMachine"]
 script = SubResource("GDScript_xcetq")
-leftBoundary = NodePath("")
-rightBoundary = NodePath("")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = SubResource("GDScript_nw4kg")

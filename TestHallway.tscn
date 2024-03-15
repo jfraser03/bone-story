@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=3 uid="uid://chkq8f57yflq4"]
+
+[ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="3_k4nby"]
+[ext_resource type="Texture2D" uid="uid://wd3bloc564fb" path="res://Pixeival wood tileset.png" id="3_u4wsf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju7ij"]
+texture = ExtResource("3_u4wsf")
+13:1/0 = 0
+13:1/0/terrain_set = 0
+13:1/0/terrain = 0
+13:1/0/terrains_peering_bit/right_side = 0
+13:1/0/terrains_peering_bit/bottom_right_corner = 0
+13:1/0/terrains_peering_bit/bottom_side = 0
+13:2/0 = 0
+13:2/0/terrain_set = 0
+13:2/0/terrain = 0
+13:2/0/terrains_peering_bit/right_side = 0
+13:2/0/terrains_peering_bit/bottom_right_corner = 0
+13:2/0/terrains_peering_bit/bottom_side = 0
+13:2/0/terrains_peering_bit/top_side = 0
+13:2/0/terrains_peering_bit/top_right_corner = 0
+13:3/0 = 0
+13:3/0/terrain_set = 0
+13:3/0/terrain = 0
+13:3/0/terrains_peering_bit/right_side = 0
+13:3/0/terrains_peering_bit/top_side = 0
+13:3/0/terrains_peering_bit/top_right_corner = 0
+14:3/0 = 0
+14:3/0/terrain_set = 0
+14:3/0/terrain = 0
+14:3/0/terrains_peering_bit/right_side = 0
+14:3/0/terrains_peering_bit/left_side = 0
+14:3/0/terrains_peering_bit/top_left_corner = 0
+14:3/0/terrains_peering_bit/top_side = 0
+14:3/0/terrains_peering_bit/top_right_corner = 0
+14:2/0 = 0
+14:2/0/terrain_set = 0
+14:2/0/terrain = 0
+14:2/0/terrains_peering_bit/right_side = 0
+14:2/0/terrains_peering_bit/bottom_right_corner = 0
+14:2/0/terrains_peering_bit/bottom_side = 0
+14:2/0/terrains_peering_bit/bottom_left_corner = 0
+14:2/0/terrains_peering_bit/left_side = 0
+14:2/0/terrains_peering_bit/top_left_corner = 0
+14:2/0/terrains_peering_bit/top_side = 0
+14:2/0/terrains_peering_bit/top_right_corner = 0
+14:1/0 = 0
+14:1/0/terrain_set = 0
+14:1/0/terrain = 0
+14:1/0/terrains_peering_bit/right_side = 0
+14:1/0/terrains_peering_bit/bottom_right_corner = 0
+14:1/0/terrains_peering_bit/bottom_side = 0
+14:1/0/terrains_peering_bit/bottom_left_corner = 0
+14:1/0/terrains_peering_bit/left_side = 0
+15:1/0 = 0
+15:1/0/terrain_set = 0
+15:1/0/terrain = 0
+15:1/0/terrains_peering_bit/bottom_side = 0
+15:1/0/terrains_peering_bit/bottom_left_corner = 0
+15:1/0/terrains_peering_bit/left_side = 0
+15:2/0 = 0
+15:2/0/terrain_set = 0
+15:2/0/terrain = 0
+15:2/0/terrains_peering_bit/bottom_side = 0
+15:2/0/terrains_peering_bit/bottom_left_corner = 0
+15:2/0/terrains_peering_bit/left_side = 0
+15:2/0/terrains_peering_bit/top_left_corner = 0
+15:2/0/terrains_peering_bit/top_side = 0
+15:3/0 = 0
+15:3/0/terrain_set = 0
+15:3/0/terrain = 0
+15:3/0/terrains_peering_bit/left_side = 0
+15:3/0/terrains_peering_bit/top_left_corner = 0
+15:3/0/terrains_peering_bit/top_side = 0
+14:5/0 = 0
+14:5/0/terrain_set = 0
+14:5/0/terrain = 0
+
+[sub_resource type="TileSet" id="TileSet_tpclm"]
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Floor"
+terrain_set_0/terrain_0/color = Color(0.611765, 0.196078, 0.470588, 1)
+sources/3 = SubResource("TileSetAtlasSource_ju7ij")
+
+[node name="TestHallway" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_tpclm")
+format = 2
+layer_0/tile_data = PackedInt32Array(131078, 917507, 3, 65542, 917507, 2, 6, 917507, 2, -65530, 917507, 2, -131066, 983043, 2, -196602, 983043, 1, 131077, 917507, 3, 65541, 917507, 2, 5, 917507, 2, -65531, 917507, 2, -131067, 917507, 2, -196603, 917507, 1, 131076, 917507, 3, 65540, 917507, 2, 4, 917507, 2, -65532, 917507, 2, -131068, 917507, 2, -196604, 917507, 1, 131075, 917507, 3, 65539, 917507, 2, 3, 917507, 2, -65533, 917507, 2, -131069, 917507, 2, -196605, 917507, 2, 131074, 917507, 3, 65538, 917507, 2, 2, 917507, 2, -65534, 917507, 2, -131070, 917507, 2, -196606, 917507, 2, 131073, 917507, 3, 65537, 917507, 2, 1, 917507, 2, -65535, 917507, 2, -131071, 917507, 2, -196607, 917507, 1, 131072, 917507, 3, 65536, 917507, 2, 0, 917507, 2, -65536, 917507, 2, -131072, 917507, 2, -196608, 917507, 1, 196607, 917507, 3, 131071, 917507, 2, 65535, 917507, 2, -1, 917507, 2, -65537, 917507, 2, -131073, 917507, 1, 196606, 917507, 3, 131070, 917507, 2, 65534, 917507, 2, -2, 917507, 2, -65538, 917507, 2, -131074, 917507, 1, 196605, 917507, 3, 131069, 917507, 2, 65533, 917507, 2, -3, 917507, 2, -65539, 917507, 2, -131075, 917507, 1, 196604, 917507, 3, 131068, 917507, 2, 65532, 917507, 2, -4, 917507, 2, -65540, 851971, 2, -131076, 851971, 1, 196603, 917507, 3, 131067, 917507, 2, 65531, 917507, 2, -5, 917507, 1, 196602, 917507, 3, 131066, 917507, 2, 65530, 917507, 2, -6, 917507, 1, 196601, 917507, 3, 131065, 917507, 2, 65529, 917507, 2, -7, 917507, 1, 196600, 917507, 3, 131064, 917507, 2, 65528, 917507, 2, -8, 917507, 1, 196599, 917507, 3, 131063, 917507, 2, 65527, 851971, 2, -9, 851971, 1, 196598, 917507, 3, 131062, 917507, 1, 196597, 851971, 3, 131061, 851971, 1, -262141, 983043, 2, -327677, 983043, 2, -393213, 983043, 2, -458749, 983043, 1, -262142, 851971, 2, -327678, 851971, 2, -393214, 851971, 2, -458750, 851971, 1, 131081, 983043, 3, 65545, 983043, 2, 9, 983043, 2, -65527, 983043, 1, 131080, 917507, 3, 65544, 917507, 2, 8, 917507, 2, -65528, 917507, 1, 131079, 917507, 3, 65543, 917507, 2, 7, 917507, 2, -65529, 917507, 1)
+
+[node name="Bonesly" parent="." instance=ExtResource("3_k4nby")]
+
+[node name="Camera2D" type="Camera2D" parent="Bonesly"]
+position = Vector2(-2.08165e-12, -2.08165e-12)
