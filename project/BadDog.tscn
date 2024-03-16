@@ -1,32 +1,185 @@
-[gd_scene load_steps=9 format=3 uid="uid://5mqc1nho2n1j"]
+[gd_scene load_steps=21 format=3 uid="uid://5mqc1nho2n1j"]
 
-[ext_resource type="Texture2D" uid="uid://b1riuefickgvr" path="res://dog-test.png" id="1_0s1yu"]
+[ext_resource type="Texture2D" uid="uid://cd6jemha1wo7y" path="res://dog-idle-sheet.png" id="1_ymu7a"]
+[ext_resource type="Texture2D" uid="uid://c7vu8m5v2nsmr" path="res://baddog-watch-sheet.png" id="2_4wjc6"]
 [ext_resource type="Script" path="res://state_machine.gd" id="2_btne5"]
 
 [sub_resource type="GDScript" id="GDScript_i85d0"]
 script/source = "extends CharacterBody2D
 
 @onready var stateMachine = $StateMachine
+@export var Friend : CharacterBody2D
+@export var leftBoundary : Marker2D
+@export var rightBoundary : Marker2D
+@onready var sprite = $AnimatedSprite2D
+
+var dog_boundaries : Dictionary
 
 func _ready():
-	stateMachine._set_state(\"block\")
+	stateMachine.animation_update.connect(_on_animation_update)
+	if leftBoundary != null && rightBoundary != null:
+		# Set the boundary dictionary variables
+		dog_boundaries['left'] = leftBoundary.global_position.x
+		dog_boundaries['right'] = rightBoundary.global_position.x
+		
+		# Set his position in the center of the boundaries
+		var size = dog_boundaries['right'] - dog_boundaries['left']
+		position.x = dog_boundaries['right'] - (size/2)
+		
+	stateMachine._set_state(\"idle\")
 
 func _physics_process(delta):
 	move_and_slide()
+
+func _on_animation_update(state, direction):
+	var new_animation = state + \"_\" + direction
+	sprite.play(new_animation)
 "
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tpoc5"]
-atlas = ExtResource("1_0s1yu")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt2iy"]
+atlas = ExtResource("1_ymu7a")
 region = Rect2(0, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gblq"]
+atlas = ExtResource("2_4wjc6")
+region = Rect2(105, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yfnj"]
+atlas = ExtResource("2_4wjc6")
+region = Rect2(35, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax5pw"]
+atlas = ExtResource("2_4wjc6")
+region = Rect2(140, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4445x"]
+atlas = ExtResource("2_4wjc6")
+region = Rect2(70, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqgsb"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(140, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juy12"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(105, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqtah"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(175, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dm2t6"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(35, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymt6j"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(245, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abfqt"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(70, 0, 35, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b273k"]
+atlas = ExtResource("1_ymu7a")
+region = Rect2(210, 0, 35, 40)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4oywn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tpoc5")
+"texture": SubResource("AtlasTexture_dt2iy")
 }],
 "loop": true,
 "name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gblq")
+}],
+"loop": true,
+"name": &"idle_down_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yfnj")
+}],
+"loop": true,
+"name": &"idle_down_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax5pw")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4445x")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqgsb")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juy12")
+}],
+"loop": true,
+"name": &"idle_up_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqtah")
+}],
+"loop": true,
+"name": &"idle_up_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dm2t6")
+}],
+"loop": true,
+"name": &"run_down_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymt6j")
+}],
+"loop": true,
+"name": &"run_down_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abfqt")
+}],
+"loop": true,
+"name": &"run_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b273k")
+}],
+"loop": true,
+"name": &"run_right",
 "speed": 5.0
 }]
 
@@ -38,43 +191,112 @@ height = 36.0
 script/source = "extends State
 
 @export var DOG_SPEED : int
-
+@export var StateMachine : StateMachine
+@export var Actor : CharacterBody2D
 @export var Player : CharacterBody2D
-@export var leftBoundary : Marker2D
-@export var rightBoundary : Marker2D
+var dog_boundaries : Dictionary
+var direction : String
 
 func _enter_state():
-	print(\"Block state entered\")
+	dog_boundaries = Actor.dog_boundaries
+	direction = \"\"
 
 func _physics_update(delta, Actor):
 	if Player:
 		follow_player(delta, Actor, Player)
+	if is_blocking_player() || has_reached_boundary():
+		change_state.emit(\"idle\")
+		#Change back to idle
 		
 func follow_player(delta, Actor, Player):
-	var direction = (Player.position - Actor.position).normalized()
-	Actor.velocity.x = direction.x * DOG_SPEED
-
+	var direction_to_player = (Player.position - Actor.position).normalized()
+	Actor.velocity.x = direction_to_player.x * DOG_SPEED
+	
+	if direction == \"\":
+		if direction_to_player.x > 0:
+			direction = \"down_right\"
+		elif direction_to_player.x < 0:
+			direction = \"down_left\"
+		direction_change.emit(direction)
+		play_animation.emit(\"run\")
+	
+func is_blocking_player():
+	var threshold = 1.0
+	var distance = abs(Actor.global_position.x - Player.global_position.x)
+	if distance < threshold:
+		return true
+	
+func has_reached_boundary():
+	if Actor.global_position.x < dog_boundaries['left']:
+		Actor.position.x = dog_boundaries['left'] + 1
+		return true
+		
+	if Actor.global_position.x > dog_boundaries['right']:
+		Actor.position.x = dog_boundaries['right'] - 1
+		return true
+	
+	return false
 "
 
 [sub_resource type="GDScript" id="GDScript_nw4kg"]
 script/source = "extends State
 
-@export var Player : CharacterBody2D
-@export var leftBoundary : Marker2D
-@export var rightBoundary : Marker2D
+@export var Actor : CharacterBody2D
+@export var StateMachine : StateMachine
+var Friend : CharacterBody2D
+var dog_boundaries : Dictionary
 
 func _enter_state():
-	print(\"idle state entered\")
+	Friend = Actor.Friend
+	Actor.velocity = Vector2.ZERO
+	dog_boundaries = Actor.dog_boundaries
+	StateMachine = get_parent()
 
 func _physics_update(delta, Actor):
-	if Player:
-		if player_seen():
+	point_to_friend()
+	if Friend:
+		if player_seen_or_moved():
 			change_state.emit(\"block\")
 		
-func player_seen() -> bool:
-	if Player.global_position.x >= leftBoundary.global_position.x && Player.global_position.x <= rightBoundary.global_position.x:
-		return true
+func player_seen_or_moved() -> bool:
+	var threshold = 1.0
+	var y_tolerance = 50
+	var distance_to_friend_x = abs(Actor.global_position.x - Friend.global_position.x)
+	var distance_to_friend_y = abs(Actor.global_position.y - Friend.global_position.y)
+	if distance_to_friend_y > y_tolerance: return false
+	if Friend.global_position.x >= dog_boundaries['left'] && Friend.global_position.x <= dog_boundaries['right']:
+		if distance_to_friend_x > threshold:
+			return true
 	return false
+
+func point_to_friend():
+	if Friend != null:
+		var direction_vector = Friend.global_position - Actor.global_position
+		var radians = direction_vector.angle()
+		var angle = rad_to_deg(radians) 
+		
+		var direction = \"down\"
+		if angle < 30 && angle >= -30:
+			direction = \"right\"
+		elif angle < -30 && angle >= -60:
+			direction = \"up_right\"
+		elif angle < -60 && angle >= -120:
+			direction = \"up\"
+		elif angle < -120 && angle >= -150:
+			direction = \"up_left\"
+		elif angle < -150 || angle >= 160:
+			direction = \"left\"
+		elif angle < 160 && angle >= 130:
+			direction = \"down_left\"
+		elif angle < 130 && angle >= 60:
+			direction = \"down\"
+		elif angle < 60 && angle >= 30:
+			direction = \"down_right\"
+		
+		if StateMachine != null && direction != StateMachine.direction:
+			direction_change.emit(direction)
+			play_animation.emit(\"idle\")
+			
 "
 
 [node name="BadDog" type="CharacterBody2D"]
@@ -83,7 +305,7 @@ script = SubResource("GDScript_i85d0")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -19)
 sprite_frames = SubResource("SpriteFrames_4oywn")
-animation = &"idle_down"
+animation = &"run_down_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.42109e-14, 1)
@@ -98,5 +320,6 @@ Actor = NodePath("..")
 [node name="Block" type="Node" parent="StateMachine"]
 script = SubResource("GDScript_xcetq")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("Actor")]
 script = SubResource("GDScript_nw4kg")
+Actor = NodePath("../..")
