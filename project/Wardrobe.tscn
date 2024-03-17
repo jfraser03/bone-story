@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx34x7ug7hq10"]
+
+[ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://InteractableObject.tscn" id="1_k173o"]
+[ext_resource type="Resource" uid="uid://bdt0rhvn230kv" path="res://wardrobe_dialogue.tres" id="2_lpor6"]
+
+[node name="Wardrobe" instance=ExtResource("1_k173o")]
+dialogue_resource = ExtResource("2_lpor6")

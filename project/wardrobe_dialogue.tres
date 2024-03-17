@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bdt0rhvn230kv"]
+
+[ext_resource type="Script" path="res://wardrobe_dialogue.gd" id="1_djkmr"]
+
+[resource]
+script = ExtResource("1_djkmr")
+dialogues = Array[Dictionary]([])

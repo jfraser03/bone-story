@@ -1,13 +1,12 @@
-[gd_scene load_steps=27 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=30 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
 [ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
 [ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="1_pn6sy"]
-[ext_resource type="Texture2D" uid="uid://cro21481xjvfd" path="res://bonesly-prototype-room.png" id="2_67kpo"]
+[ext_resource type="TileSet" uid="uid://do21686t3tie6" path="res://hardwood-test-map.tres" id="3_fnph2"]
 [ext_resource type="PackedScene" uid="uid://7wmjnltwndld" path="res://Cockroach.tscn" id="4_5yeoa"]
-[ext_resource type="PackedScene" uid="uid://nighydf74ymx" path="res://Bed.tscn" id="4_ud46p"]
+[ext_resource type="Texture2D" uid="uid://c6j0hiy7o7n7m" path="res://roomtest-2.png" id="4_jv1kv"]
 [ext_resource type="PackedScene" uid="uid://5mqc1nho2n1j" path="res://BadDog.tscn" id="5_aj7sn"]
-[ext_resource type="Texture2D" uid="uid://srvamoyqad4s" path="res://window-shine.png" id="5_kd6kq"]
 [ext_resource type="PackedScene" uid="uid://b2758kj1iumnj" path="res://GhostCat.tscn" id="6_3yytq"]
 [ext_resource type="Theme" uid="uid://jd3ewt0cleut" path="res://default_theme.tres" id="6_nq7dh"]
 [ext_resource type="Resource" uid="uid://2umb8lodqfbj" path="res://ghostcat_dialogue.tres" id="7_gjkx1"]
@@ -15,13 +14,17 @@
 [ext_resource type="Script" path="res://dialogue_sm.gd" id="9_50ky3"]
 [ext_resource type="Script" path="res://interaction_manager.gd" id="9_xtkuu"]
 [ext_resource type="Script" path="res://dialogue_system.gd" id="10_100is"]
+[ext_resource type="PackedScene" uid="uid://cf27xfgxdxjav" path="res://Hanger.tscn" id="12_xsq8u"]
+[ext_resource type="PackedScene" uid="uid://bbrk2inmxtc7a" path="res://Nightstand.tscn" id="13_tn03k"]
+[ext_resource type="PackedScene" uid="uid://bx34x7ug7hq10" path="res://Wardrobe.tscn" id="14_ygcil"]
 [ext_resource type="Resource" uid="uid://cbnhvyae6im0d" path="res://portraits.tres" id="16_c3sxo"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjusf"]
-size = Vector2(59, 34)
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mhi7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gryap"]
-size = Vector2(51.9135, 48.0254)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jswf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_52o8i"]
+size = Vector2(30, 28.5)
 
 [sub_resource type="GDScript" id="GDScript_hxsr3"]
 script/source = "extends State
@@ -235,20 +238,25 @@ texture = ExtResource("1_2mm2m")
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2(160, 90)
 
-[node name="Bonesly-prototype-room" type="Sprite2D" parent="Walls"]
+[node name="TileMap" type="TileMap" parent="Walls"]
+tile_set = ExtResource("3_fnph2")
+format = 2
+layer_0/tile_data = PackedInt32Array(-7, 65536, 0, 65529, 65536, 1, 131065, 65536, 1, 196601, 65536, 1, 262137, 65536, 1, 327673, 65536, 2, 327674, 65536, 2, 262138, 65536, 1, 262139, 65536, 1, 262140, 65536, 1, 262141, 65536, 1, 196605, 65536, 1, 196606, 65536, 1, 196607, 65536, 1, 131071, 65536, 1, 65536, 65536, 1, 65537, 65536, 1, 65538, 65536, 1, 2, 65536, 1, 3, 65536, 1, 4, 65536, 1, 5, 65536, 1, -65531, 65536, 0, -65530, 65536, 0, 262150, 65536, 2, 196614, 65536, 1, 131078, 65536, 1, 65542, 65536, 1, 6, 65536, 1, 262149, 65536, 2, 196613, 65536, 1, 131077, 65536, 1, 65541, 65536, 1, 262148, 65536, 2, 196612, 65536, 1, 131076, 65536, 1, 65540, 65536, 1, -65532, 65536, 0, 262147, 65536, 2, 196611, 65536, 1, 131075, 65536, 1, 65539, 65536, 1, -65533, 65536, 0, 262146, 65536, 2, 196610, 65536, 1, 131074, 65536, 1, -65534, 65536, 0, 262145, 65536, 2, 196609, 65536, 1, 131073, 65536, 1, 1, 65536, 1, -65535, 65536, 0, 262144, 65536, 2, 196608, 65536, 1, 131072, 65536, 1, 0, 65536, 1, -65536, 65536, 0, 327679, 65536, 2, 262143, 65536, 1, 65535, 65536, 1, -1, 65536, 0, 327678, 65536, 2, 262142, 65536, 1, 131070, 65536, 1, 65534, 65536, 1, -2, 65536, 0, 327677, 65536, 2, 131069, 65536, 1, 65533, 65536, 1, -3, 65536, 0, 327676, 65536, 2, 196604, 65536, 1, 131068, 65536, 1, 65532, 65536, 1, -4, 65536, 0, 327675, 65536, 2, 196603, 65536, 1, 131067, 65536, 1, 65531, 65536, 1, -5, 65536, 0, 196602, 65536, 1, 131066, 65536, 1, 65530, 65536, 1, -6, 65536, 0, 327672, 0, 2, 262136, 0, 1, 196600, 0, 1, 131064, 0, 1, 65528, 0, 1, -8, 0, 0, 262151, 131072, 2, 196615, 131072, 1, 131079, 131072, 1, 65543, 131072, 1, 7, 131072, 1, -65529, 131072, 0)
+
+[node name="Room-bg" type="Sprite2D" parent="Walls"]
 texture_filter = 1
-texture = ExtResource("2_67kpo")
+texture = ExtResource("4_jv1kv")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(-80, -52, 15, -53, 10, -77, -107, -77, -107, 76, 102, 75, 102, -77, 55, -76, 50, -53, 75, -52, 76, 51, -79, 51)
+polygon = PackedVector2Array(-115, -11, 57, -10, 57, -78, -122, -78, -123, 84, 122, 84, 121, -77, 92, -77, 92, -10, 114, -10, 113, 79, -114, 79)
 
 [node name="DogBoundaries" type="Node2D" parent="."]
 
 [node name="Left" type="Marker2D" parent="DogBoundaries"]
-position = Vector2(175, 38)
+position = Vector2(216, 84)
 
 [node name="Right" type="Marker2D" parent="DogBoundaries"]
-position = Vector2(210, 38)
+position = Vector2(253, 84)
 
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -264,7 +272,7 @@ FRICTION = 30.0
 FOLLOW_DISTANCE = 30.0
 
 [node name="BadDog" parent="YSort" node_paths=PackedStringArray("Friend", "leftBoundary", "rightBoundary") instance=ExtResource("5_aj7sn")]
-position = Vector2(194, 51)
+position = Vector2(235, 95)
 Friend = NodePath("../Bonesly")
 leftBoundary = NodePath("../../DogBoundaries/Left")
 rightBoundary = NodePath("../../DogBoundaries/Right")
@@ -286,38 +294,10 @@ position = Vector2(161, 89)
 UI = NodePath("../../UI")
 
 [node name="GhostCat" parent="YSort" node_paths=PackedStringArray("Friend") groups=["Interactable"] instance=ExtResource("6_3yytq")]
-position = Vector2(96, 89)
+position = Vector2(162, 135)
 collision_layer = 4
 Friend = NodePath("../Bonesly")
 dialogue_resource = ExtResource("7_gjkx1")
-
-[node name="Hanger" type="StaticBody2D" parent="."]
-collision_layer = 5
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hanger"]
-position = Vector2(114.5, 42)
-shape = SubResource("RectangleShape2D_jjusf")
-
-[node name="Bed" parent="." groups=["Interactable"] instance=ExtResource("4_ud46p")]
-position = Vector2(213, 118)
-collision_layer = 5
-
-[node name="Window" type="StaticBody2D" parent="."]
-position = Vector2(138, 134)
-scale = Vector2(0.75125, 0.562203)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="Window"]
-texture_filter = 1
-position = Vector2(1.47669, 10.7213)
-scale = Vector2(1.37854, 1.21149)
-texture = ExtResource("5_kd6kq")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Window"]
-position = Vector2(0.665543, 16.8978)
-shape = SubResource("RectangleShape2D_gryap")
 
 [node name="InteractionManager" type="Node" parent="." node_paths=PackedStringArray("dialogueManager", "interactionSystem")]
 script = ExtResource("9_xtkuu")
@@ -328,6 +308,31 @@ interactionSystem = NodePath("../InteractionSystem")
 script = ExtResource("10_100is")
 dialogueManager = NodePath("../DialogueManager")
 UI = NodePath("../UI")
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="Hanger" parent="Interactables" groups=["Interactable"] instance=ExtResource("12_xsq8u")]
+position = Vector2(58, 85)
+collision_layer = 5
+
+[node name="CollisionShape2D" parent="Interactables/Hanger" index="1"]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_1mhi7")
+
+[node name="Nightstand" parent="Interactables" groups=["Interactable"] instance=ExtResource("13_tn03k")]
+position = Vector2(188, 77)
+collision_layer = 5
+
+[node name="CollisionShape2D" parent="Interactables/Nightstand" index="1"]
+shape = SubResource("RectangleShape2D_8jswf")
+
+[node name="Wardrobe" parent="Interactables" groups=["Interactable"] instance=ExtResource("14_ygcil")]
+position = Vector2(125, 66)
+collision_layer = 5
+
+[node name="CollisionShape2D" parent="Interactables/Wardrobe" index="1"]
+position = Vector2(4, 8.75)
+shape = SubResource("RectangleShape2D_52o8i")
 
 [node name="DialogueManager" type="Node" parent="." node_paths=PackedStringArray("UI")]
 script = ExtResource("8_dhgy8")
@@ -368,6 +373,7 @@ mouse_filter = 2
 theme = ExtResource("6_nq7dh")
 script = SubResource("GDScript_xgpgw")
 portraits = ExtResource("16_c3sxo")
+metadata/_edit_lock_ = true
 
 [node name="Nametag" type="Control" parent="UI"]
 visible = false
@@ -432,3 +438,6 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [editable path="YSort/BadDog"]
+[editable path="Interactables/Hanger"]
+[editable path="Interactables/Nightstand"]
+[editable path="Interactables/Wardrobe"]

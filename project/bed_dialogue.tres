@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c2c87w5pb2ste"]
-
-[ext_resource type="Script" path="res://bed_dialogue.gd" id="1_xt486"]
-
-[resource]
-script = ExtResource("1_xt486")
-dialogues = Array[Dictionary]([])

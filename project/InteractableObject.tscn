@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://nighydf74ymx"]
+
+[ext_resource type="PackedScene" uid="uid://co50kyyo4w533" path="res://Interactable.tscn" id="1_5msck"]
+[ext_resource type="Resource" uid="uid://c2c87w5pb2ste" path="res://hanger_dialogue.tres" id="2_fpl5k"]
+
+[node name="Interactable" instance=ExtResource("1_5msck")]
+dialogue_resource = ExtResource("2_fpl5k")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-1, 4.5)
