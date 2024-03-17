@@ -4,7 +4,7 @@ extends Node
 class_name DialogueManager
 
 @export var CHAR_LIMIT : int
-@export var UI : Control
+@export var UI : Node
 
 @onready var StateMachine = $StateMachine
 @onready var finishedState = $StateMachine/Finished
