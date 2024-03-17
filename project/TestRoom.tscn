@@ -272,8 +272,9 @@ rightBoundary = NodePath("../../DogBoundaries/Right")
 [node name="AnimatedSprite2D" parent="YSort/BadDog" index="0"]
 animation = &"idle_up"
 
-[node name="Block" parent="YSort/BadDog/StateMachine" index="0" node_paths=PackedStringArray("Actor", "Player")]
+[node name="Block" parent="YSort/BadDog/StateMachine" index="0" node_paths=PackedStringArray("StateMachine", "Actor", "Player")]
 DOG_SPEED = 150
+StateMachine = NodePath("..")
 Actor = NodePath("../..")
 Player = NodePath("../../../Bonesly")
 
