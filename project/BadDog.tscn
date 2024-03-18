@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://5mqc1nho2n1j"]
+[gd_scene load_steps=28 format=3 uid="uid://5mqc1nho2n1j"]
 
 [ext_resource type="Texture2D" uid="uid://cd6jemha1wo7y" path="res://dog-idle-sheet.png" id="1_ymu7a"]
 [ext_resource type="Texture2D" uid="uid://c7vu8m5v2nsmr" path="res://baddog-watch-sheet.png" id="2_4wjc6"]
 [ext_resource type="Script" path="res://state_machine.gd" id="2_btne5"]
+[ext_resource type="Texture2D" uid="uid://cyafvr8g7oncg" path="res://dog-walk-test.png" id="3_k6bwy"]
 
 [sub_resource type="GDScript" id="GDScript_i85d0"]
 script/source = "extends CharacterBody2D
@@ -76,13 +77,37 @@ region = Rect2(35, 0, 35, 40)
 atlas = ExtResource("1_ymu7a")
 region = Rect2(245, 0, 35, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_abfqt"]
-atlas = ExtResource("1_ymu7a")
-region = Rect2(70, 0, 35, 40)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0apj2"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(90, 0, 45, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b273k"]
-atlas = ExtResource("1_ymu7a")
-region = Rect2(210, 0, 35, 40)
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwubt"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(135, 0, 45, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kgks"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(0, 0, 45, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs8j5"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(45, 0, 45, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emkyp"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(180, 0, 45, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wf0n"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(225, 0, 45, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ns20"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(270, 0, 45, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5m0r4"]
+atlas = ExtResource("3_k6bwy")
+region = Rect2(315, 0, 45, 40)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4oywn"]
 animations = [{
@@ -168,7 +193,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_abfqt")
+"texture": SubResource("AtlasTexture_0apj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwubt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kgks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs8j5")
 }],
 "loop": true,
 "name": &"run_left",
@@ -176,7 +210,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_b273k")
+"texture": SubResource("AtlasTexture_emkyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wf0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ns20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5m0r4")
 }],
 "loop": true,
 "name": &"run_right",
@@ -215,9 +258,9 @@ func follow_player(delta, Actor, Player):
 	
 	if direction == \"\":
 		if direction_to_player.x > 0:
-			direction = \"down_right\"
+			direction = \"right\"
 		elif direction_to_player.x < 0:
-			direction = \"down_left\"
+			direction = \"left\"
 		direction_change.emit(direction)
 		play_animation.emit(\"run\")
 	
@@ -307,7 +350,7 @@ script = SubResource("GDScript_i85d0")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -19)
 sprite_frames = SubResource("SpriteFrames_4oywn")
-animation = &"run_down_right"
+animation = &"run_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.42109e-14, 1)

@@ -232,7 +232,7 @@ Bonesly = NodePath("YSort/Bonesly")
 metadata/_edit_vertical_guides_ = [-60.0]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(102, 107)
+position = Vector2(161, 89)
 limit_left = -60
 limit_top = -1000
 limit_right = 350
