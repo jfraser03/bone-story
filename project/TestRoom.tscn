@@ -1,14 +1,13 @@
-[gd_scene load_steps=31 format=3 uid="uid://b0v3b4xa3blyl"]
+[gd_scene load_steps=33 format=3 uid="uid://b0v3b4xa3blyl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdl3byi1dk7d" path="res://placeholder-house.png" id="1_2mm2m"]
-[ext_resource type="Script" path="res://room_logic.gd" id="1_gpbl1"]
 [ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="1_pn6sy"]
 [ext_resource type="Script" path="res://bound_camera.gd" id="2_0e75k"]
 [ext_resource type="TileSet" uid="uid://do21686t3tie6" path="res://hardwood-test-map.tres" id="3_fnph2"]
 [ext_resource type="PackedScene" uid="uid://7wmjnltwndld" path="res://Cockroach.tscn" id="4_5yeoa"]
 [ext_resource type="Texture2D" uid="uid://c6j0hiy7o7n7m" path="res://roomtest-2.png" id="4_jv1kv"]
-[ext_resource type="PackedScene" uid="uid://5mqc1nho2n1j" path="res://BadDog.tscn" id="5_aj7sn"]
 [ext_resource type="PackedScene" uid="uid://b2758kj1iumnj" path="res://GhostCat.tscn" id="6_3yytq"]
+[ext_resource type="PackedScene" uid="uid://dg0h2pvbuxrpc" path="res://Exit.tscn" id="6_hx2xt"]
 [ext_resource type="Theme" uid="uid://jd3ewt0cleut" path="res://default_theme.tres" id="6_nq7dh"]
 [ext_resource type="Resource" uid="uid://2umb8lodqfbj" path="res://ghostcat_dialogue.tres" id="7_gjkx1"]
 [ext_resource type="Script" path="res://dialogue_manager.gd" id="8_dhgy8"]
@@ -19,6 +18,24 @@
 [ext_resource type="PackedScene" uid="uid://bbrk2inmxtc7a" path="res://Nightstand.tscn" id="13_tn03k"]
 [ext_resource type="PackedScene" uid="uid://bx34x7ug7hq10" path="res://Wardrobe.tscn" id="14_ygcil"]
 [ext_resource type="Resource" uid="uid://cbnhvyae6im0d" path="res://portraits.tres" id="16_c3sxo"]
+
+[sub_resource type="GDScript" id="GDScript_spa6q"]
+script/source = "extends RoomScene
+"
+
+[sub_resource type="GDScript" id="GDScript_7yr5r"]
+script/source = "extends Exit
+
+func _ready():
+	from_scene = \"bedroom\"
+	to_scene = preload(\"res://TestHallway.tscn\")
+	
+	direction = \"up\"
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gfyrg"]
+radius = 4.0
+height = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1mhi7"]
 
@@ -226,9 +243,8 @@ line_spacing = 8.0
 font_size = 8
 shadow_size = 0
 
-[node name="TestRoom" type="Node2D" node_paths=PackedStringArray("Bonesly")]
-script = ExtResource("1_gpbl1")
-Bonesly = NodePath("YSort/Bonesly")
+[node name="TestRoom" type="Node2D"]
+script = SubResource("GDScript_spa6q")
 metadata/_edit_vertical_guides_ = [-60.0]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -269,13 +285,24 @@ texture = ExtResource("4_jv1kv")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 polygon = PackedVector2Array(-115, -11, 57, -10, 57, -78, -122, -78, -123, 84, 122, 84, 121, -77, 92, -77, 92, -10, 114, -10, 113, 79, -114, 79)
 
-[node name="DogBoundaries" type="Node2D" parent="."]
+[node name="Entrances" type="Node2D" parent="."]
 
-[node name="Left" type="Marker2D" parent="DogBoundaries"]
-position = Vector2(216, 84)
+[node name="Hallway" type="Marker2D" parent="Entrances"]
+position = Vector2(234, 88)
 
-[node name="Right" type="Marker2D" parent="DogBoundaries"]
-position = Vector2(253, 84)
+[node name="Exits" type="Node2D" parent="."]
+
+[node name="Hallway" parent="Exits" instance=ExtResource("6_hx2xt")]
+position = Vector2(234, 73)
+script = SubResource("GDScript_7yr5r")
+
+[node name="CollisionShape2D" parent="Exits/Hallway" index="0"]
+position = Vector2(0, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gfyrg")
+
+[node name="EnterPosition" parent="Exits/Hallway" index="1"]
+position = Vector2(0, 16)
 
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -290,27 +317,8 @@ ACCELERATION = 50.0
 FRICTION = 30.0
 FOLLOW_DISTANCE = 30.0
 
-[node name="BadDog" parent="YSort" node_paths=PackedStringArray("Friend", "leftBoundary", "rightBoundary") instance=ExtResource("5_aj7sn")]
-position = Vector2(235, 95)
-Friend = NodePath("../Bonesly")
-leftBoundary = NodePath("../../DogBoundaries/Left")
-rightBoundary = NodePath("../../DogBoundaries/Right")
-
-[node name="AnimatedSprite2D" parent="YSort/BadDog" index="0"]
-animation = &"idle_up"
-
-[node name="Block" parent="YSort/BadDog/StateMachine" index="0" node_paths=PackedStringArray("StateMachine", "Actor", "Player")]
-DOG_SPEED = 150
-StateMachine = NodePath("..")
-Actor = NodePath("../..")
-Player = NodePath("../../../Bonesly")
-
-[node name="Idle" parent="YSort/BadDog/StateMachine" index="1" node_paths=PackedStringArray("StateMachine")]
-StateMachine = NodePath("..")
-
-[node name="Bonesly" parent="YSort" node_paths=PackedStringArray("UI") instance=ExtResource("1_pn6sy")]
+[node name="Bonesly" parent="YSort" instance=ExtResource("1_pn6sy")]
 position = Vector2(161, 89)
-UI = NodePath("../../CanvasLayer/UI")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Bonesly"]
 remote_path = NodePath("../../../Camera2D")
@@ -462,7 +470,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[editable path="YSort/BadDog"]
+[editable path="Exits/Hallway"]
 [editable path="Interactables/Hanger"]
 [editable path="Interactables/Nightstand"]
 [editable path="Interactables/Wardrobe"]

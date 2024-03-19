@@ -7,8 +7,6 @@ class_name Bonesly
 @export var FRICTION = 2000
 var input = Vector2.ZERO
 
-@export var UI : Control
-
 @onready var interactArea = $InteractArea
 @onready var StateMachine = $StateMachine
 @onready var interact = $StateMachine/Interact
@@ -38,6 +36,10 @@ func _on_animation_update(state, direction):
 
 	Sprite.play(animation)
 	Sprite.set_frame_and_progress(current_frame, progress)
+
+func set_direction(new_direction):
+	StateMachine.direction = new_direction
+	StateMachine._play_animation('idle')
 
 func _interact():
 	if interactables != []:

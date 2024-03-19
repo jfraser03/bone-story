@@ -1,95 +1,105 @@
-[gd_scene load_steps=5 format=3 uid="uid://chkq8f57yflq4"]
+[gd_scene load_steps=10 format=3 uid="uid://chkq8f57yflq4"]
 
-[ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="3_k4nby"]
-[ext_resource type="Texture2D" uid="uid://wd3bloc564fb" path="res://Pixeival wood tileset.png" id="3_u4wsf"]
+[ext_resource type="PackedScene" uid="uid://dycad4hhqtdi4" path="res://Bonesly.tscn" id="1_0e8yj"]
+[ext_resource type="TileSet" uid="uid://do21686t3tie6" path="res://hardwood-test-map.tres" id="1_oqbi0"]
+[ext_resource type="Texture2D" uid="uid://br2bt3l4qay87" path="res://hallway-testing-bg.png" id="2_ykoqn"]
+[ext_resource type="PackedScene" uid="uid://dgg07o1iym1l6" path="res://DogBoundaries.tscn" id="4_01cwb"]
+[ext_resource type="PackedScene" uid="uid://dg0h2pvbuxrpc" path="res://Exit.tscn" id="4_7hm1t"]
+[ext_resource type="PackedScene" uid="uid://5mqc1nho2n1j" path="res://BadDog.tscn" id="4_bk1aa"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju7ij"]
-texture = ExtResource("3_u4wsf")
-13:1/0 = 0
-13:1/0/terrain_set = 0
-13:1/0/terrain = 0
-13:1/0/terrains_peering_bit/right_side = 0
-13:1/0/terrains_peering_bit/bottom_right_corner = 0
-13:1/0/terrains_peering_bit/bottom_side = 0
-13:2/0 = 0
-13:2/0/terrain_set = 0
-13:2/0/terrain = 0
-13:2/0/terrains_peering_bit/right_side = 0
-13:2/0/terrains_peering_bit/bottom_right_corner = 0
-13:2/0/terrains_peering_bit/bottom_side = 0
-13:2/0/terrains_peering_bit/top_side = 0
-13:2/0/terrains_peering_bit/top_right_corner = 0
-13:3/0 = 0
-13:3/0/terrain_set = 0
-13:3/0/terrain = 0
-13:3/0/terrains_peering_bit/right_side = 0
-13:3/0/terrains_peering_bit/top_side = 0
-13:3/0/terrains_peering_bit/top_right_corner = 0
-14:3/0 = 0
-14:3/0/terrain_set = 0
-14:3/0/terrain = 0
-14:3/0/terrains_peering_bit/right_side = 0
-14:3/0/terrains_peering_bit/left_side = 0
-14:3/0/terrains_peering_bit/top_left_corner = 0
-14:3/0/terrains_peering_bit/top_side = 0
-14:3/0/terrains_peering_bit/top_right_corner = 0
-14:2/0 = 0
-14:2/0/terrain_set = 0
-14:2/0/terrain = 0
-14:2/0/terrains_peering_bit/right_side = 0
-14:2/0/terrains_peering_bit/bottom_right_corner = 0
-14:2/0/terrains_peering_bit/bottom_side = 0
-14:2/0/terrains_peering_bit/bottom_left_corner = 0
-14:2/0/terrains_peering_bit/left_side = 0
-14:2/0/terrains_peering_bit/top_left_corner = 0
-14:2/0/terrains_peering_bit/top_side = 0
-14:2/0/terrains_peering_bit/top_right_corner = 0
-14:1/0 = 0
-14:1/0/terrain_set = 0
-14:1/0/terrain = 0
-14:1/0/terrains_peering_bit/right_side = 0
-14:1/0/terrains_peering_bit/bottom_right_corner = 0
-14:1/0/terrains_peering_bit/bottom_side = 0
-14:1/0/terrains_peering_bit/bottom_left_corner = 0
-14:1/0/terrains_peering_bit/left_side = 0
-15:1/0 = 0
-15:1/0/terrain_set = 0
-15:1/0/terrain = 0
-15:1/0/terrains_peering_bit/bottom_side = 0
-15:1/0/terrains_peering_bit/bottom_left_corner = 0
-15:1/0/terrains_peering_bit/left_side = 0
-15:2/0 = 0
-15:2/0/terrain_set = 0
-15:2/0/terrain = 0
-15:2/0/terrains_peering_bit/bottom_side = 0
-15:2/0/terrains_peering_bit/bottom_left_corner = 0
-15:2/0/terrains_peering_bit/left_side = 0
-15:2/0/terrains_peering_bit/top_left_corner = 0
-15:2/0/terrains_peering_bit/top_side = 0
-15:3/0 = 0
-15:3/0/terrain_set = 0
-15:3/0/terrain = 0
-15:3/0/terrains_peering_bit/left_side = 0
-15:3/0/terrains_peering_bit/top_left_corner = 0
-15:3/0/terrains_peering_bit/top_side = 0
-14:5/0 = 0
-14:5/0/terrain_set = 0
-14:5/0/terrain = 0
+[sub_resource type="GDScript" id="GDScript_68ybf"]
+script/source = "extends RoomScene
+"
 
-[sub_resource type="TileSet" id="TileSet_tpclm"]
-terrain_set_0/mode = 0
-terrain_set_0/terrain_0/name = "Floor"
-terrain_set_0/terrain_0/color = Color(0.611765, 0.196078, 0.470588, 1)
-sources/3 = SubResource("TileSetAtlasSource_ju7ij")
+[sub_resource type="GDScript" id="GDScript_h2o6g"]
+script/source = "extends Exit
+
+func _ready():
+	from_scene = \"hallway\"
+	to_scene = preload(\"res://TestRoom.tscn\")
+	direction = \"down\"
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xn2sk"]
+radius = 3.0
+height = 34.0
 
 [node name="TestHallway" type="Node2D"]
+script = SubResource("GDScript_68ybf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(137, 100)
+limit_left = -24
+limit_right = 480
+limit_bottom = 160
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_tpclm")
+position = Vector2(228, 78)
+tile_set = ExtResource("1_oqbi0")
 format = 2
-layer_0/tile_data = PackedInt32Array(131078, 917507, 3, 65542, 917507, 2, 6, 917507, 2, -65530, 917507, 2, -131066, 983043, 2, -196602, 983043, 1, 131077, 917507, 3, 65541, 917507, 2, 5, 917507, 2, -65531, 917507, 2, -131067, 917507, 2, -196603, 917507, 1, 131076, 917507, 3, 65540, 917507, 2, 4, 917507, 2, -65532, 917507, 2, -131068, 917507, 2, -196604, 917507, 1, 131075, 917507, 3, 65539, 917507, 2, 3, 917507, 2, -65533, 917507, 2, -131069, 917507, 2, -196605, 917507, 2, 131074, 917507, 3, 65538, 917507, 2, 2, 917507, 2, -65534, 917507, 2, -131070, 917507, 2, -196606, 917507, 2, 131073, 917507, 3, 65537, 917507, 2, 1, 917507, 2, -65535, 917507, 2, -131071, 917507, 2, -196607, 917507, 1, 131072, 917507, 3, 65536, 917507, 2, 0, 917507, 2, -65536, 917507, 2, -131072, 917507, 2, -196608, 917507, 1, 196607, 917507, 3, 131071, 917507, 2, 65535, 917507, 2, -1, 917507, 2, -65537, 917507, 2, -131073, 917507, 1, 196606, 917507, 3, 131070, 917507, 2, 65534, 917507, 2, -2, 917507, 2, -65538, 917507, 2, -131074, 917507, 1, 196605, 917507, 3, 131069, 917507, 2, 65533, 917507, 2, -3, 917507, 2, -65539, 917507, 2, -131075, 917507, 1, 196604, 917507, 3, 131068, 917507, 2, 65532, 917507, 2, -4, 917507, 2, -65540, 851971, 2, -131076, 851971, 1, 196603, 917507, 3, 131067, 917507, 2, 65531, 917507, 2, -5, 917507, 1, 196602, 917507, 3, 131066, 917507, 2, 65530, 917507, 2, -6, 917507, 1, 196601, 917507, 3, 131065, 917507, 2, 65529, 917507, 2, -7, 917507, 1, 196600, 917507, 3, 131064, 917507, 2, 65528, 917507, 2, -8, 917507, 1, 196599, 917507, 3, 131063, 917507, 2, 65527, 851971, 2, -9, 851971, 1, 196598, 917507, 3, 131062, 917507, 1, 196597, 851971, 3, 131061, 851971, 1, -262141, 983043, 2, -327677, 983043, 2, -393213, 983043, 2, -458749, 983043, 1, -262142, 851971, 2, -327678, 851971, 2, -393214, 851971, 2, -458750, 851971, 1, 131081, 983043, 3, 65545, 983043, 2, 9, 983043, 2, -65527, 983043, 1, 131080, 917507, 3, 65544, 917507, 2, 8, 917507, 2, -65528, 917507, 1, 131079, 917507, 3, 65543, 917507, 2, 7, 917507, 2, -65529, 917507, 1)
+layer_0/tile_data = PackedInt32Array(-14, 0, 0, -13, 65536, 0, 65523, 65536, 1, 65524, 65536, 1, 65522, 0, 1, 131058, 0, 1, 131059, 65536, 1, 131060, 65536, 1, -12, 65536, 0, -11, 65536, 0, 196622, 131072, 2, 131086, 131072, 1, 65550, 131072, 1, 14, 131072, 1, -65522, 131072, 0, 196621, 65536, 2, 131085, 65536, 1, 65549, 65536, 1, 13, 65536, 1, -65523, 65536, 0, 196620, 65536, 2, 131084, 65536, 1, 65548, 65536, 1, 12, 65536, 1, -65524, 65536, 0, 196619, 65536, 2, 131083, 65536, 1, 65547, 65536, 1, 11, 65536, 1, -65525, 65536, 0, 196618, 65536, 2, 131082, 65536, 1, 65546, 65536, 1, 10, 65536, 1, -65526, 65536, 0, 196617, 65536, 2, 131081, 65536, 1, 65545, 65536, 1, 9, 65536, 1, -65527, 65536, 0, 196616, 65536, 2, 131080, 65536, 1, 65544, 65536, 1, 8, 65536, 1, -65528, 65536, 0, 196615, 65536, 2, 131079, 65536, 1, 65543, 65536, 1, 7, 65536, 1, -65529, 65536, 0, 196614, 65536, 2, 131078, 65536, 1, 65542, 65536, 1, 6, 65536, 1, -65530, 65536, 0, 196613, 65536, 2, 131077, 65536, 1, 65541, 65536, 1, 5, 65536, 1, -65531, 65536, 0, 196612, 65536, 2, 131076, 65536, 1, 65540, 65536, 1, 4, 65536, 1, -65532, 65536, 0, 196611, 65536, 2, 131075, 65536, 1, 65539, 65536, 1, 3, 65536, 1, -65533, 65536, 0, 196610, 65536, 2, 131074, 65536, 1, 65538, 65536, 1, 2, 65536, 1, -65534, 65536, 0, 196609, 65536, 2, 131073, 65536, 1, 65537, 65536, 1, 1, 65536, 1, -65535, 65536, 1, 196608, 65536, 2, 131072, 65536, 1, 65536, 65536, 1, 0, 65536, 1, -65536, 65536, 1, 262143, 65536, 2, 196607, 65536, 1, 131071, 65536, 1, 65535, 65536, 1, -1, 65536, 1, 262142, 65536, 2, 196606, 65536, 1, 131070, 65536, 1, 65534, 65536, 1, -2, 65536, 1, 262141, 65536, 2, 196605, 65536, 1, 131069, 65536, 1, 65533, 65536, 1, -3, 65536, 1, 262140, 65536, 2, 196604, 65536, 1, 131068, 65536, 1, 65532, 65536, 1, -4, 65536, 1, 262139, 65536, 2, 196603, 65536, 1, 131067, 65536, 1, 65531, 65536, 1, -5, 65536, 1, 262138, 65536, 2, 196602, 65536, 1, 131066, 65536, 1, 65530, 65536, 1, -6, 65536, 0, 262137, 65536, 2, 196601, 65536, 1, 131065, 65536, 1, 65529, 65536, 1, -7, 65536, 0, 262136, 65536, 2, 196600, 65536, 1, 131064, 65536, 1, 65528, 65536, 1, -8, 65536, 0, 262135, 65536, 2, 196599, 65536, 1, 131063, 65536, 1, 65527, 65536, 1, -9, 65536, 0, 262134, 65536, 2, 196598, 65536, 1, 131062, 65536, 1, 65526, 65536, 1, -10, 65536, 0, 262133, 65536, 2, 196597, 65536, 1, 131061, 65536, 1, 65525, 65536, 1, 262132, 65536, 2, 196596, 65536, 1, 262131, 65536, 2, 196595, 65536, 1, 262130, 0, 2, 196594, 0, 1, -131071, 131072, 1, -196607, 131072, 1, -262143, 131072, 0, -131072, 65536, 1, -196608, 65536, 1, -262144, 65536, 0, -65537, 65536, 1, -131073, 65536, 1, -196609, 65536, 0, -65538, 65536, 1, -131074, 65536, 1, -196610, 65536, 0, -65539, 65536, 1, -131075, 65536, 1, -196611, 65536, 0, -65540, 65536, 1, -131076, 65536, 1, -196612, 65536, 0, -65541, 0, 1, -131077, 0, 1, -196613, 0, 0)
 
-[node name="Bonesly" parent="." instance=ExtResource("3_k4nby")]
+[node name="Walls" type="StaticBody2D" parent="."]
+position = Vector2(228, 78)
 
-[node name="Camera2D" type="Camera2D" parent="Bonesly"]
-position = Vector2(-2.08165e-12, -2.08165e-12)
+[node name="Sprite2D" type="Sprite2D" parent="Walls"]
+texture = ExtResource("2_ykoqn")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+position = Vector2(-228, -78)
+polygon = PackedVector2Array(7, 132, 106, 131, 106, 142, 0, 142, 0, 0, 146, 1, 146, 66, 7, 66)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Walls"]
+position = Vector2(-228, -78)
+polygon = PackedVector2Array(140, 142, 465, 141, 463, 1, 257, 2, 163, 2, 146, 2, 146, 19, 162, 19, 162, 47, 209, 47, 210, 19, 258, 19, 258, 67, 369, 67, 370, 8, 405, 8, 405, 67, 454, 67, 454, 131, 140, 131)
+
+[node name="DogBoundaries" parent="." instance=ExtResource("4_01cwb")]
+
+[node name="Left" parent="DogBoundaries" index="0"]
+position = Vector2(169, 53)
+
+[node name="Right" parent="DogBoundaries" index="1"]
+position = Vector2(212, 53)
+
+[node name="Exits" type="Node2D" parent="."]
+
+[node name="Bedroom" parent="Exits" instance=ExtResource("4_7hm1t")]
+position = Vector2(123, 136)
+collision_mask = 3
+script = SubResource("GDScript_h2o6g")
+
+[node name="CollisionShape2D" parent="Exits/Bedroom" index="0"]
+position = Vector2(0, 8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xn2sk")
+
+[node name="EnterPosition" parent="Exits/Bedroom" index="1"]
+position = Vector2(0, -17)
+
+[node name="YSort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Bonesly" parent="YSort" instance=ExtResource("1_0e8yj")]
+position = Vector2(137, 100)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Bonesly"]
+remote_path = NodePath("../../../Camera2D")
+
+[node name="BadDog" parent="YSort" node_paths=PackedStringArray("Friend", "leftBoundary", "rightBoundary") instance=ExtResource("4_bk1aa")]
+position = Vector2(188, 60)
+Friend = NodePath("../Bonesly")
+leftBoundary = NodePath("../../DogBoundaries/Left")
+rightBoundary = NodePath("../../DogBoundaries/Right")
+
+[node name="Block" parent="YSort/BadDog/StateMachine" index="0" node_paths=PackedStringArray("StateMachine", "Actor", "Player")]
+DOG_SPEED = 150
+StateMachine = NodePath("..")
+Actor = NodePath("../..")
+Player = NodePath("../../../Bonesly")
+
+[node name="Idle" parent="YSort/BadDog/StateMachine" index="1" node_paths=PackedStringArray("StateMachine")]
+StateMachine = NodePath("..")
+
+[editable path="DogBoundaries"]
+[editable path="Exits/Bedroom"]
+[editable path="YSort/BadDog"]

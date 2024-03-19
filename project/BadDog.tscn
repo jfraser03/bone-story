@@ -243,7 +243,6 @@ var direction : String
 func _enter_state():
 	dog_boundaries = Actor.dog_boundaries
 	direction = \"\"
-	print(\"Blocking\")
 
 func _physics_update(delta, Actor):
 	if Player:
@@ -291,7 +290,6 @@ var Friend : CharacterBody2D
 var dog_boundaries : Dictionary
 
 func _enter_state():
-	print(\"Idling\")
 	Friend = Actor.Friend
 	Actor.velocity = Vector2.ZERO
 	dog_boundaries = Actor.dog_boundaries
