@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5lt3eka00jp2"]
+[gd_scene load_steps=6 format=3 uid="uid://b5lt3eka00jp2"]
 
 [ext_resource type="Script" path="res://scene_loader.gd" id="1_dmeei"]
-[ext_resource type="Texture2D" uid="uid://cskn0x2pxsbrf" path="res://black-circle.png" id="2_emuf4"]
+[ext_resource type="Shader" path="res://screen_shader.gdshader" id="2_dihqt"]
+[ext_resource type="Texture2D" uid="uid://dsc5x1r2880gl" path="res://white-circle.png" id="3_cg0ub"]
 
 [sub_resource type="GDScript" id="GDScript_l6kcj"]
 script/source = "extends CanvasLayer
 
-@onready var mask = $CircularMask
-#@onready var blackScreen = $BlackScreen
+@onready var mask = $BackBufferCopy/CircularMask
 @onready var animationPlayer = $AnimationPlayer
 
 const MASK_FULL_SCALE = Vector2(3.87, 3.87)
@@ -42,7 +42,9 @@ func reset():
 func zoom_in(door_position : Vector2):
 	if transition_tween:
 		transition_tween.kill()
+	transition_tween = null
 	transition_tween = get_tree().create_tween()
+	transition_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	transition_tween.parallel().tween_property(mask, \"scale\", MASK_SMALL_SCALE, SPEED)
 	transition_tween.parallel().tween_property(mask, \"position\", door_position, SPEED)
 	await transition_tween.finished
@@ -52,8 +54,9 @@ func zoom_in(door_position : Vector2):
 func zoom_out():
 	if transition_tween:
 		transition_tween.kill()
+	transition_tween = null
 	transition_tween = get_tree().create_tween()
-	transition_tween = get_tree().create_tween()
+	transition_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	transition_tween.parallel().tween_property(mask, \"scale\", MASK_FULL_SCALE, SPEED)
 	transition_tween.parallel().tween_property(mask, \"position\", MASK_FULL_POSITION, SPEED)
 	await transition_tween.finished
@@ -62,6 +65,10 @@ func zoom_out():
 	
 	
 "
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64stq"]
+shader = ExtResource("2_dihqt")
+shader_parameter/invert_mask = false
 
 [node name="TestUpstairs" type="Node2D"]
 
@@ -72,9 +79,17 @@ script = ExtResource("1_dmeei")
 layer = 100
 script = SubResource("GDScript_l6kcj")
 
-[node name="CircularMask" type="Sprite2D" parent="SceneLoader/RoomTransition"]
-position = Vector2(234, 78)
+[node name="BackBufferCopy" type="BackBufferCopy" parent="SceneLoader/RoomTransition"]
+
+[node name="ColorRect" type="ColorRect" parent="SceneLoader/RoomTransition/BackBufferCopy"]
+offset_right = 320.0
+offset_bottom = 179.0
+color = Color(0, 0, 0, 1)
+
+[node name="CircularMask" type="Sprite2D" parent="SceneLoader/RoomTransition/BackBufferCopy"]
+material = SubResource("ShaderMaterial_64stq")
+position = Vector2(97, 56)
 scale = Vector2(0.485, 0.485)
-texture = ExtResource("2_emuf4")
+texture = ExtResource("3_cg0ub")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SceneLoader/RoomTransition"]

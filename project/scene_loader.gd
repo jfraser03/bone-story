@@ -59,12 +59,12 @@ func _on_target_scene_loaded():
 func exit_transition_start(prev_door_position : Vector2):
 	# This is the blackout transition
 	roomTransition.exit_transition(prev_door_position)
-	#get_tree().paused = true
+	get_tree().paused = true
 	await roomTransition.exit_transition_finished
 
 func enter_transition_start(new_door_position : Vector2):
 	# This is the blackout transition
-	roomTransition.enter_transition(Vector2.ZERO)
+	roomTransition.enter_transition(new_door_position)
 	get_tree().paused = false
 	await roomTransition.enter_transition_finished
 	

@@ -285,15 +285,10 @@ texture = ExtResource("4_jv1kv")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 polygon = PackedVector2Array(-115, -11, 57, -10, 57, -78, -122, -78, -123, 84, 122, 84, 121, -77, 92, -77, 92, -10, 114, -10, 113, 79, -114, 79)
 
-[node name="Entrances" type="Node2D" parent="."]
-
-[node name="Hallway" type="Marker2D" parent="Entrances"]
-position = Vector2(234, 88)
-
 [node name="Exits" type="Node2D" parent="."]
 
 [node name="Hallway" parent="Exits" instance=ExtResource("6_hx2xt")]
-position = Vector2(234, 73)
+position = Vector2(234, 71)
 script = SubResource("GDScript_7yr5r")
 
 [node name="CollisionShape2D" parent="Exits/Hallway" index="0"]
@@ -302,13 +297,13 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_gfyrg")
 
 [node name="EnterPosition" parent="Exits/Hallway" index="1"]
-position = Vector2(0, 16)
+position = Vector2(0, 14)
 
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="Cockroach" parent="YSort" node_paths=PackedStringArray("Friend") instance=ExtResource("4_5yeoa")]
-position = Vector2(161, 60)
+position = Vector2(188, 134)
 collision_layer = 0
 collision_mask = 0
 Friend = NodePath("../Bonesly")
