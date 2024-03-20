@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bei36uskultbr"]
+
+[ext_resource type="Texture2D" uid="uid://ddn1minntp5q8" path="res://bone-load-test.png" id="1_pygui"]
+
+[node name="LoadingScreen" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(295, 152)
+texture = ExtResource("1_pygui")

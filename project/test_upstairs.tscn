@@ -1,8 +1,80 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5lt3eka00jp2"]
+[gd_scene load_steps=4 format=3 uid="uid://b5lt3eka00jp2"]
 
 [ext_resource type="Script" path="res://scene_loader.gd" id="1_dmeei"]
+[ext_resource type="Texture2D" uid="uid://cskn0x2pxsbrf" path="res://black-circle.png" id="2_emuf4"]
+
+[sub_resource type="GDScript" id="GDScript_l6kcj"]
+script/source = "extends CanvasLayer
+
+@onready var mask = $CircularMask
+#@onready var blackScreen = $BlackScreen
+@onready var animationPlayer = $AnimationPlayer
+
+const MASK_FULL_SCALE = Vector2(3.87, 3.87)
+const MASK_SMALL_SCALE = Vector2(0.01, 0.01)
+const MASK_FULL_POSITION = Vector2(160, 90)
+const SPEED = 1
+
+var transition_tween : Tween
+
+signal enter_transition_finished
+signal exit_transition_finished
+
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	reset()
+
+func exit_transition(door_position):
+	set_visible(true)
+	mask.set_scale(MASK_FULL_SCALE)
+	mask.set_position(MASK_FULL_POSITION)
+	zoom_in(door_position)
+
+func enter_transition(door_position : Vector2):
+	set_visible(true)
+	mask.set_scale(MASK_SMALL_SCALE)
+	mask.set_position(door_position)
+	zoom_out()
+	
+func reset():
+	set_visible(false)
+
+func zoom_in(door_position : Vector2):
+	if transition_tween:
+		transition_tween.kill()
+	transition_tween = get_tree().create_tween()
+	transition_tween.parallel().tween_property(mask, \"scale\", MASK_SMALL_SCALE, SPEED)
+	transition_tween.parallel().tween_property(mask, \"position\", door_position, SPEED)
+	await transition_tween.finished
+	exit_transition_finished.emit()
+	reset()
+
+func zoom_out():
+	if transition_tween:
+		transition_tween.kill()
+	transition_tween = get_tree().create_tween()
+	transition_tween = get_tree().create_tween()
+	transition_tween.parallel().tween_property(mask, \"scale\", MASK_FULL_SCALE, SPEED)
+	transition_tween.parallel().tween_property(mask, \"position\", MASK_FULL_POSITION, SPEED)
+	await transition_tween.finished
+	enter_transition_finished.emit()
+	reset()
+	
+	
+"
 
 [node name="TestUpstairs" type="Node2D"]
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("1_dmeei")
+
+[node name="RoomTransition" type="CanvasLayer" parent="SceneLoader"]
+layer = 100
+script = SubResource("GDScript_l6kcj")
+
+[node name="CircularMask" type="Sprite2D" parent="SceneLoader/RoomTransition"]
+position = Vector2(234, 78)
+scale = Vector2(0.485, 0.485)
+texture = ExtResource("2_emuf4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SceneLoader/RoomTransition"]

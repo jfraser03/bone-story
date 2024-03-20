@@ -16,7 +16,7 @@ script/source = "extends Exit
 
 func _ready():
 	from_scene = \"hallway\"
-	to_scene = preload(\"res://TestRoom.tscn\")
+	to_scene_path = \"res://TestRoom.tscn\"
 	direction = \"down\"
 "
 
@@ -74,7 +74,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_xn2sk")
 
 [node name="EnterPosition" parent="Exits/Bedroom" index="1"]
-position = Vector2(0, -17)
+position = Vector2(0, -3)
 
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true

@@ -37,7 +37,7 @@ func _on_animation_update(state, direction):
 	Sprite.play(animation)
 	Sprite.set_frame_and_progress(current_frame, progress)
 
-func set_direction(new_direction):
+func set_starting_direction(new_direction):
 	StateMachine.direction = new_direction
 	StateMachine._play_animation('idle')
 
