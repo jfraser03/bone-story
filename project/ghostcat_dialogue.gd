@@ -6,10 +6,21 @@ func initialize():
 			"character": {
 				"name" : "ghostcat",
 				"display_name" : "Ghost Cat",
-				"mood" : "neutral"
+				"mood" : "shocked"
 			},
 			"text": {
-				"script" : "Last night I visited your grave.",
+				"script" : "WOAH!!!",
+				"speed" : TextSpeed["fast"]
+				}
+		},
+		{
+			"character": {
+				"name" : "ghostcat",
+				"display_name" : "Ghost Cat",
+				"mood" : "shocked"
+			},
+			"text": {
+				"script" : "Am I dead??",
 				"effects" : ["shake"],
 				"speed" : TextSpeed["medium"]
 				}
@@ -18,10 +29,21 @@ func initialize():
 			"character": {
 				"name" : "ghostcat",
 				"display_name" : "Ghost Cat",
-				"mood" : "neutral"
+				"mood" : "scared"
 			},
 			"text": {
-				"script" : "And I fricking threw up.",
+				"script" : "Aw man that's not a.. *gulp * .. cockroach following you around, is it?",
+				"speed" : TextSpeed["slow"]
+				}
+		},
+		{
+			"character": {
+				"name" : "ghostcat",
+				"display_name" : "Ghost Cat",
+				"mood" : "angry"
+			},
+			"text": {
+				"script" : "I COULD TOTALLY STOMP THAT LITTLE LOSER.", ## Should be link to the dialogue localization file
 				"effects" : ["shake"],
 				"speed" : TextSpeed["fast"]
 				}
@@ -30,10 +52,10 @@ func initialize():
 			"character": {
 				"name" : "ghostcat",
 				"display_name" : "Ghost Cat",
-				"mood" : "happy"
+				"mood" : "sad"
 			},
 			"text": {
-				"script" : "But throwing up isn't so bad! After a while it actually feels pretty nice!!", ## Should be link to the dialogue localization file
+				"script" : ".... Sorry. I've been trying to work on my people and bug skills.", ## Should be link to the dialogue localization file
 				"speed" : TextSpeed["medium"]
 				}
 		},
@@ -41,10 +63,10 @@ func initialize():
 			"character": {
 				"name" : "ghostcat",
 				"display_name" : "Ghost Cat",
-				"mood" : "happy"
+				"mood" : "neutral"
 			},
 			"text": {
-				"script" : "I could probably throw up again today and be pretty brave about it.",
+				"script" : "Whatever though. People suck and bugs suck.",
 				"speed" : TextSpeed["medium"]
 				}
 		},
@@ -63,7 +85,7 @@ func initialize():
 			"character": {
 				"name" : "ghostcat",
 				"display_name" : "Ghost Cat",
-				"mood" : "neutral"
+				"mood" : "shocked"
 			},
 			"text": {
 				"script" : "I hope you don't choke on it.",

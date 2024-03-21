@@ -24,6 +24,7 @@ func set_mood(new_mood):
 func play_animation():
 	var animation = mood + \"_\" + state
 	animatedSprite.set_animation(animation)
+	animatedSprite.play()
 "
 
 [sub_resource type="Animation" id="Animation_sy8l4"]
@@ -63,4 +64,4 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(2.08165e-12, 3)
 sprite_frames = ExtResource("1_340fo")
-animation = &"neutral_talking"
+animation = &"angry_talking"
