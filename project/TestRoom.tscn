@@ -248,7 +248,7 @@ script = SubResource("GDScript_spa6q")
 metadata/_edit_vertical_guides_ = [-60.0]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(234, 92)
+position = Vector2(200, 122)
 limit_left = -60
 limit_top = -1000
 limit_right = 350
@@ -313,7 +313,7 @@ FRICTION = 30.0
 FOLLOW_DISTANCE = 30.0
 
 [node name="Bonesly" parent="YSort" instance=ExtResource("1_pn6sy")]
-position = Vector2(234, 92)
+position = Vector2(200, 122)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Bonesly"]
 remote_path = NodePath("../../../Camera2D")
